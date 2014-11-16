@@ -28,20 +28,22 @@ public class UserDaoImp implements IUserDao {
             String sql = "INSERT INTO USUARI (FIRSTNAME,LASTNAME,EMAIL,PASSWORD,USERNAME) VALUES ('" + user.getFirstName() + "','" + user.getLastName() + "','" + user.getEmail() + "','" + user.getPassword() + "','" + user.getUserName() + "')";
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-        } catch (Exception e) {
-
-            throw new DaoException(e.getMessage());
-
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();throw new DaoException(ex.getMessage());
+        } finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
         }
-        return true;
+
     }
 
     @Override
-    public int findUserByName(User u) throws DaoException {
+    public User findUserByName(User u) throws DaoException {
         PreparedStatement ps = null;
         Connection con = null;
         String userDb;
-        int userId = -1;
+        User userId = new User();
         try {
             con = createConnection();
             String sql = "SELECT * FROM USUARI WHERE USUARI.\"USERNAME\"= ?";
@@ -49,25 +51,26 @@ public class UserDaoImp implements IUserDao {
             ps.setString(1, ((User) u).getUserName());
             ResultSet rs = ps.executeQuery();
             rs.next();
-            try {
-                userDb = rs.getString(Config.ATTR_USER_USERNAME);
-                if (u.getUserName().equals(userDb)) {
-                    userId = rs.getInt("id");
-                }
-            } catch (Exception e) {
-                out.println("No encuentra el user");
+
+            userDb = rs.getString(Config.ATTR_USER_USERNAME);
+            if (u.getUserName().equals(userDb)) {
+                userId.setId(rs.getInt("id"));
             }
-        } catch (Exception e) {
-            throw new DaoException(e.getMessage());
+            return userId;
+        } catch (Exception ex) {
+            ex.printStackTrace();throw new DaoException(ex.getMessage());
+        } finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
         }
-        return userId;
+
     }
 
     public boolean updatePassword(String newPass, int idUser) throws DaoException {
         PreparedStatement ps = null;
         Connection con = null;
         String userDb;
-        boolean updated=false;
+        boolean updated = false;
         try {
             con = createConnection();
             String sql = "UPDATE USUARI SET PASSWORD = ? WHERE ID=?";
@@ -75,11 +78,15 @@ public class UserDaoImp implements IUserDao {
             ps.setString(1, newPass);
             ps.setInt(2, idUser);
             ps.executeUpdate();
-            updated=true;
-        } catch (Exception e) {
-            throw new DaoException(e.getMessage());
+            updated = true;
+            return updated;
+        } catch (Exception ex) {
+            ex.printStackTrace();throw new DaoException(ex.getMessage());
+        } finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
         }
-        return updated;
+       
     }
 
     /**
@@ -89,10 +96,11 @@ public class UserDaoImp implements IUserDao {
      * @throws DaoException
      */
     @Override
-    public int findUserByEmail(String email) throws DaoException {
+    public User findUserByEmail(String email) throws DaoException {
         PreparedStatement ps = null;
         Connection con = null;
         String userDb;
+        User userReturn = new User();
         out.println("EMAIL" + email);
         int idUser = -1;
         try {
@@ -102,10 +110,14 @@ public class UserDaoImp implements IUserDao {
             ResultSet rs = ps.executeQuery();
             rs.next();
             idUser = Integer.parseInt(rs.getString(Config.ATTR_USER_ID));
+            userReturn.setId(idUser);
+            return userReturn;
         } catch (Exception e) {
-            e.toString();
-        }
-        return idUser;
+            throw new DaoException(e.getMessage());
+        }finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        }    
     }
 
     @Override
@@ -135,11 +147,13 @@ public class UserDaoImp implements IUserDao {
             if ((u.getUserName().equals(userDb)) && (u.getPassword().equals(passDb))) {
                 exists = true;
             }
-
-        } catch (Exception ex) {
-            throw new DaoException(ex.getMessage());
-        }
-        return exists;
+            return exists;  
+            } catch (Exception ex) {
+                throw new DaoException(ex.getMessage());
+            }finally {
+                try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+                try {if (con != null) {con.close();}} catch (Exception ex) {}
+            }  
     }
 
     private Connection createConnection() throws Exception {

@@ -7,6 +7,7 @@ package cat.urv.deim.sob.command;
 
 import cat.urv.deim.sob.Config;
 import cat.urv.deim.sob.DaoException;
+import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import cat.urv.deim.sob.model.UserDaoImp;
 import java.io.IOException;
@@ -40,17 +41,17 @@ public class ForgetPassCommand implements Command {
         email = request.getParameter("email");
 
         UserDaoImp userDao = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
-        int idUser;
+        User idUser;
         try {
             idUser = userDao.findUserByEmail(email);
             out.println("ID USER:" + idUser);
-            if (idUser == -1) {
+            if (idUser.getId() == -1) {
                 out.println("NO EXISTE UN USER CON ESTE EMAIL");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/login.jsp").forward(request, response);
             } else {
                 randomPass = generateRandomString();
-                boolean introduit = resetNewPassword(randomPass, idUser);
+                boolean introduit = resetNewPassword(randomPass, idUser.getId());
                 if (introduit) {
                     Properties props = new Properties();
                     String msgBody = "Your new Password is: " + randomPass;
@@ -101,7 +102,7 @@ public class ForgetPassCommand implements Command {
         }
     }
 
-    private boolean resetNewPassword(String newPass, int idUser) throws DaoException {
+    private boolean resetNewPassword(String newPass,int idUser) throws DaoException {
         UserDaoImp userDao = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         boolean actualitzat = userDao.updatePassword(newPass, idUser);
         return actualitzat;

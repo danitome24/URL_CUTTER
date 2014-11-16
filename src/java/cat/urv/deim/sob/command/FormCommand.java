@@ -45,7 +45,9 @@ public class FormCommand implements Command {
                 HttpSession userSession = request.getSession(true);
                 Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
                 loginCookie.setMaxAge(30 * 60); //expire in 30 min
-                response.addCookie(loginCookie);
+                response.addCookie(loginCookie);              
+                User id = userDAO.findUserByName(usuari);
+                usuari.setId(id.getId());
                 userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
             }
 

@@ -6,7 +6,7 @@
 package cat.urv.deim.sob.model;
 
 import cat.urv.deim.sob.DaoException;
-import java.sql.ResultSet;
+import java.util.Collection;
 
 /**
  *
@@ -14,5 +14,6 @@ import java.sql.ResultSet;
  */
 public interface IUrlDao {
     public boolean addUrl(Url urln ,int idUser) throws DaoException;
-    public ResultSet showUrl(int i) throws DaoException;
+    public Collection showUrl(int i) throws DaoException;
+    public Url getLongUrl(String shortUrl, int id) throws DaoException;
 }

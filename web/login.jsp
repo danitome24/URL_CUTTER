@@ -37,11 +37,10 @@
                 }
                 if (userName != null) {
                     user.setUserName(userName);
-                    int id = userDAO.findUserByName(user);
-                    if (id !=-1) {
-                        System.out.println(Config.ATTR_SERVLET_ID + id);
+                    User id = userDAO.findUserByName(user);
+                    if (id.getId() !=-1) {
+                        user.setId(id.getId());
                         HttpSession userSession = request.getSession(true);
-                        userSession.setAttribute(Config.ATTR_SERVLET_ID,id);
                         userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
                         response.sendRedirect("index.jsp");
                     }

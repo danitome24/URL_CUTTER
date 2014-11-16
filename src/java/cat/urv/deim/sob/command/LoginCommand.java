@@ -34,10 +34,10 @@ public class LoginCommand implements Command {
             isValid = userDAO.login(usuari);
             if (isValid) {
                 HttpSession userSession = request.getSession(true);
-                int idUser = userDAO.findUserByName(usuari);
-                userSession.setAttribute(Config.ATTR_USER_ID, idUser);
+                User idUser = userDAO.findUserByName(usuari);
                 Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
                 loginCookie.setMaxAge(30 * 60); //expire in 30 min
+                usuari.setId(idUser.getId());
                 response.addCookie(loginCookie);
                 userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
             }

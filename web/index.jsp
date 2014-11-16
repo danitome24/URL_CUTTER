@@ -4,6 +4,10 @@
     Author     : danie_000
 --%>
 
+
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Collection"%>
+<%@page import="cat.urv.deim.sob.model.Url"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="cat.urv.deim.sob.model.UrlDaoImp"%>
 <%@page import="cat.urv.deim.sob.model.UrlDaoFactory"%>
@@ -32,11 +36,13 @@
                     <%
                         UrlDaoImp urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
                         HttpSession userSession = request.getSession(false);
-                        int idUser = (Integer) userSession.getAttribute(Config.ATTR_SERVLET_ID);
-                        ResultSet rs = urlDao.showUrl(idUser);
-                        while (rs.next()) {
-                            String url = rs.getString(Config.ATTR_URL_NAME);
-                            String nVisits = rs.getString(Config.ATTR_URL_NUMVISITS);
+                        User idUser = (User)userSession.getAttribute(Config.ATTR_SERVLET_USER);
+                        Collection urlCol = urlDao.showUrl(idUser.getId());
+                        Iterator it = urlCol.iterator();
+                        while (it.hasNext()) {
+                            Url urlShow = (Url)it.next();
+                            String url = urlShow.getUrl();
+                            int nVisits = urlShow.getNumVisits();
                     %>
                     <tr>
                         <td>
