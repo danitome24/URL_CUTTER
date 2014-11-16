@@ -1,0 +1,165 @@
+body {
+    background-color: #D0D0D0;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-left:  10%;
+    padding-right: 10%;
+}
+
+#bar {
+    text-align: right;
+}
+
+ul {
+    list-style-type: none;
+}
+
+#positionLogin{
+    padding-left: 50px;
+}
+body div.row{
+    margin-top:10%;
+}
+.med {
+    font-size: 27px;
+    color: white;
+    padding: 3px;
+}
+input{
+    width: 100%;
+    padding: 15px;
+    border-radius: 2px;
+    border: none;
+    text-align: center;
+}
+.colored {
+    background-color: #FFFFFF;
+    text-align:center;
+
+}
+.border-radius{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.border-login{
+    -moz-border-radius-topleft: 30px;
+    -webkit-border-top-left-radius: 30px;
+    border-top-left-radius: 30px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-bottomright: 30px;
+    -webkit-border-bottom-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px; 
+}
+.wide {
+    background-color: #8EB7E4;
+    width: 100%;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.hidden {
+    display: none;
+}
+.medhidden {
+    font-size: 27px;
+    color: #f96145;
+    padding: 10px;
+    text-align: center;
+    width:100%;
+}
+.redborder {
+    border:2px solid #f96145;
+    border-radius:2px;
+}
+h1 {
+    position: relative;
+    font-size: 70px;
+    margin-top: 0;
+    font-family: 'Lobster', sans-serif;
+    color:#FF9933;
+}
+#navhead {
+    font-size: 35px;
+    position: relative;
+    margin-top: 0;
+    font-family: 'Lobster', sans-serif;
+    color:#FF9933;
+    margin-left: 40%;
+}
+
+#buttonaddurl {
+    font-size: 20px;
+    position: relative;
+    top: 40px;
+    left: 60px;
+}
+
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.dropdown-menu{
+    background-color:#E8E8E8 ;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+
+.navbar {
+    background-color: #404040;
+}
+
+#loginDrop {
+    color: #FF9900;
+     margin-right: 50%;
+}
+
+#divurl {
+    
+    width:70%;
+}
+
+table {
+    width : 100%;
+}
+
+h2 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+#tableurl{
+    border-collapse: separate;
+    border-spacing:  15px;
+}
+
+#loginform{
+    margin-top: 10%;
+}
+#inputurl{
+    width: 75%;
+}
+
+#buttoncut {
+    width: 25%;
+}
