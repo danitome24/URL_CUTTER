@@ -20,7 +20,9 @@
     </head>
     <body>
         <%@ include file="/include/navbar.jsp" %>
-
+        <%      HttpSession userSession = request.getSession(true);
+                User user= (User)userSession.getAttribute(Config.ATTR_SERVLET_USER);
+        %>
         <div class="container" >
             <div class="row" >
                 <div class="col-md-6 col-md-offset-3  colored border-radius">
@@ -30,26 +32,26 @@
                         <tbody>
                             <tr>
                                 <td class="camp">Nom: </td>
-                                <td class="active"> Kilian Calo </td>
-                                <td class="success"> <a href="modifyname.jsp" class="btn btn-info col-md-offset-7 col-md-6">Modifica</a> </td>
+                                <td class="active"> <%= user.getFirstName() %> </td>
+                                <td class="success"> <a href="modifyname.jsp" class="btn btn-info col-md-offset-7">Modifica</a> </td>
                             </tr>
                             
                             <tr>
                                 <td class="camp">Nom user: </td>
-                                <td class="active"> k1lian </td>
-                                <td class="success"> <a href="modifyuser.jsp" class="btn btn-info col-md-offset-7 col-md-6">Modifica</a> </td>
+                                <td class="active"> <%= user.getUserName() %> </td>
+                                <td class="success"> <a href="modifyuser.jsp" class="btn btn-info col-md-offset-7 ">Modifica</a> </td>
                             </tr>
                             
                             
                             <tr>
                                  <td class="camp">Password: </td>
                                 <td class="active"> ***** </td>
-                                <td class="success"> <a href="modifypw.jsp" class="btn btn-info col-md-offset-7 col-md-6">Modifica</a> </td>                              
+                                <td class="success"> <a href="modifypw.jsp" class="btn btn-info col-md-offset-7">Modifica</a> </td>                              
                             </tr>
                             <tr>
                                  <td class="camp">E-mail: </td>
-                                <td class="active"> kiliwiwo@gm... </td>
-                                <td class="success"> <a href="modifymail.jsp" class="btn btn-info col-md-offset-7 col-md-6">Modifica</a> </td>                              
+                                <td class="active"> <%= user.getEmail() %> </td>
+                                <td class="success"> <a href="modifymail.jsp" class="btn btn-info col-md-offset-7">Modifica</a> </td>                              
                             </tr>
                             
                             

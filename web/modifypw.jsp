@@ -20,29 +20,29 @@
     </head>
     <body>
         <%@ include file="/include/navbar.jsp" %>
+
         <div class="row" >
             <div class="col-md-5 col-md-offset-3  colored border-radius">
                 <h2>Canvia la teva password</h2>
-
-                <table id="tmodify">
-                    <tbody>
-                    <form role="form" method="post" action="" >
+                <form role="form" method="post" action="changePass.do" >
+                    <input type="hidden" name="form_action" value="changePass" />
+                    <input type="hidden" name="user" value=<% %>></
+                    <table id="tmodify">
                         <tr>
                             <td class="camp">Anterior password: </td>
-                            <td class="active"> <input required="" name="" type="text" class="form-control" id="" placeholder=""> </td>
+                            <td class="active"> <input required="" name="oldPass" type="text" class="form-control" id="" placeholder=""> </td>
                         </tr>
                         <tr>
                             <td class="camp">Nou password: </td>
-                            <td class="active"> <input required="" name="" type="text" class="form-control" id="" placeholder=""> </td>
+                            <td class="active"> <input required="" name="newPass1" type="text" class="form-control" id="" placeholder=""> </td>
                         </tr>
                         <tr>
                             <td class="camp">Repeteix nou password: </td>
-                            <td class="active"> <input required="" name="" type="text" class="form-control" id="" placeholder=""> </td>
-                            <td class="success"> <a href="#" class="btn btn-info col-md-offset-4 col-md-9">Modifica</a> </td>
+                            <td class="active"> <input required="" name="newPass2" type="text" class="form-control" id="" placeholder=""> </td>
+                            <td class="success"> <button type="submit" class="btn btn-info col-md-offset-2">Modifica</button> </td>
                         </tr>
-                    </form>        
-                    </tbody>
-                </table>
+                    </table>
+                </form>
             </div>
         </div>   
     </body>
