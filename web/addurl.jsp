@@ -18,6 +18,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/navbar.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/javascript.js"></script>
@@ -30,26 +31,38 @@
             HttpSession userSession = request.getSession(false);
             String urlShort = (String) userSession.getAttribute(Config.ATTR_URL_URLSHORT);
         %>
-        <div class="container">
-            <div class="row" >
-                <div class="col-md-4 col-md-offset-4  colored border-login">
-                    <h2>URL</h2>
-                    <form class="form-horizontal" role="form" method="post" action="addurl.do">
-                        <input type="hidden" name="form_action" value="addurl" />
-                        <div class="col-sm-10">                        
-                            <input required="" type="text" name="url" class="form-control" id="url"> 
-                            <button type="submit" class="btn btn-info col-md-offset-5 col-md-3">Cut</button>
-                            <output name="x" for="a b"><%= urlShort%></output>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p>
-                                        <a href="http://localhost:8080/SOB/index.jsp" class="btn btn-danger btn-block">Aceptar</a>
-                                    </p>
-                                </div>
+
+        <div class="row" >
+            <div class="col-md-4 col-md-offset-4  colored border-login">
+                <h2>URL</h2>
+                <span class="glyphicon glyphicon-globe"></span>
+                <form class="form-horizontal" role="form" method="post" action="addurl.do">
+                    <input type="hidden" name="form_action" value="addurl" />
+                    <div class="col-sm-10">                        
+                        <table id ="tableurl">
+                            <tr>
+                                <td id="inputurl">
+                                    <input required="" type="text" name="url" class="form-control"> 
+
+                                </td>
+                                <td id="buttoncut">
+                                    <button type="submit" class="btn btn-info" >Cutter</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <output name="x" for="a b"><%= urlShort%></output>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>
+                                    <a href="http://localhost:8080/SOB/index.jsp" class="btn btn-danger btn-block">Aceptar</a>
+                                </p>
                             </div>
-                    </form>
-                </div>                
-            </div>
-        </div>   
-    </body>
+                        </div>
+                    </div>
+                </form>
+            </div>                
+        </div>
+    </div>
+
+</body>
 </html>

@@ -32,51 +32,57 @@ public class AddUrlCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String urlName = null;
+        HttpSession usersession = request.getSession(false);
         urlName = request.getParameter(Config.ATTR_URL_NAME);
-        HttpSession session = request.getSession(false);
-        User idUser = (User) session.getAttribute(Config.ATTR_SERVLET_USER);
-        out.println(idUser);
-        if (urlName != null) {
-            Url url = new Url();
-            url.setUrl(urlName);
-            IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
-            try {
-                boolean insert = false;
-                String hashUrl = getHashUrl(url.getUrl());
-                url.setUrlShort(hashUrl);
-                insert = urlDao.addUrl(url, idUser.getId());
-                if (insert) {
-                    String urlShortAll = "http://localhost:8080/SOB/url/"+url.getUrlShort();
-                    session.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/addurl.jsp").forward(request, response);
-                } else {
-                    out.println("NO SE HA PODIDO INSERTAR LA URL");
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+        if (urlName.length() < 26) {
+            User idUser = (User) usersession.getAttribute(Config.ATTR_SERVLET_USER);
+            out.println(idUser);
+            if (urlName != null) {
+                Url url = new Url();
+                url.setUrl(urlName);
+                IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
+                try {
+                    boolean insert = false;
+                    String hashUrl = getHashUrl(url.getUrl());
+                    url.setUrlShort(hashUrl);
+                    insert = urlDao.addUrl(url, idUser.getId());
+                    if (insert) {
+                        String urlShortAll = "http://localhost:8080/SOB/url/" + url.getUrlShort();
+                        usersession.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
+                        ServletContext context = request.getSession().getServletContext();
+                        context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+                    } else {
+                        out.println("NO SE HA PODIDO INSERTAR LA URL");
+                        ServletContext context = request.getSession().getServletContext();
+                        context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+                    }
+                } catch (DaoException ex) {
+                    ex.toString();
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(AddUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (DaoException ex) {
-                ex.toString();
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(AddUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                out.println("NO HAY URL I/O SESION");
             }
         } else {
-            out.println("NO HAY URL I/O SESION");
+            out.println("URL MUY CORTA");
+            ServletContext context = request.getSession().getServletContext();
+            context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         }
     }
 
     private String getHashUrl(String url) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA1");
         out.println("HOLAAA");
-            md.reset();
-            byte[] buffer = url.getBytes();
-            md.update(buffer);
-            byte[] digest = md.digest();
+        md.reset();
+        byte[] buffer = url.getBytes();
+        md.update(buffer);
+        byte[] digest = md.digest();
 
-            String hexStr = "";
-            for (int i = 0; i < 3; i++) {
-                hexStr +=  Integer.toString( ( digest[i] & 0xff ) + 0x100, 16).substring( 1 );
-            }
+        String hexStr = "";
+        for (int i = 0; i < 3; i++) {
+            hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
+        }
         return hexStr;
     }
 

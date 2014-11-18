@@ -1,16 +1,15 @@
 <%-- 
-    Document   : index
-    Created on : 16-oct-2014, 17:30:18
-    Author     : danie_000
+    Document   : deleteurl
+    Created on : 17-nov-2014, 19:10:15
+    Author     : KILIAN
 --%>
 
 
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.Collection"%>
 <%@page import="cat.urv.deim.sob.model.Url"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="cat.urv.deim.sob.model.UrlDaoImp"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="cat.urv.deim.sob.model.UrlDaoFactory"%>
+<%@page import="java.util.Collection"%>
+<%@page import="cat.urv.deim.sob.model.UrlDaoImp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,31 +29,31 @@
         <!--
             Testing div URL container
         --> 
+
         <div class="row" id="divurl">
-            <div class="col-md-offset-4 col-md-8 colored border-radius" >
+            <div class="col-md-offset-4 col-md-9 colored border-radius" >
                 <table id="idtable">
                     <%
                         UrlDaoImp urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
                         HttpSession userSession = request.getSession(false);
-                        User idUser = (User)userSession.getAttribute(Config.ATTR_SERVLET_USER);
+                        User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
                         Collection urlCol = urlDao.showUrl(idUser.getId());
                         Iterator it = urlCol.iterator();
                         while (it.hasNext()) {
-                            Url urlShow = (Url)it.next();
+                            Url urlShow = (Url) it.next();
                             String url = urlShow.getUrl();
                             int nVisits = urlShow.getNumVisits();
                     %>
                     <tr>
                         <td>
-                            <strong><%= url%></strong>
+                            <a class="center-block" href=""> <%= url%> </a>
                         </td>
                         <td>
-                            <strong><%= nVisits%></strong>
+                            <a href="" class="btn btn-info col-md-offset-5 buttondelete">Borra</a>
                         </td>
                     </tr>
                     <% }%>
                 </table>    
             </div>
-        </div>
     </body>
 </html>

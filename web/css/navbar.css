@@ -1,0 +1,95 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-nov-2014, 20:46:46
+    Author     : KILIAN
+*/
+
+#generalnav {
+    height: 60px;
+}
+
+
+#logindrop {
+    color: #FF9900;
+    width: 50%;
+    font-size:15px;
+}
+
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.dropdown{
+    width: 100%;
+    position:relative;
+    bottom: 50%;
+}
+
+.dropdown-menu{
+    background-color:#E8E8E8 ;
+    width : 100%;
+}
+
+.navbar {
+    background-color: #404040;
+}
+
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+
+.navbar-header{
+    height: 100%;
+    position: relative;
+    left: 10%;
+}
+
+#navhead {
+    font-size: 40px;
+    font-family: 'Lobster', sans-serif;
+    color:#FF9933;
+    position: relative;
+    top: 10%;
+    
+}
+
+#menuurl {
+    font-family: 'Open Sans', sans-serif;
+    color:#FF9933;
+    position: relative;
+    top:35%;
+    right: 30%;
+    font-size: 21px;
+    font-weight: bold;
+    width: 100%;
+}
+
+#menulogin {
+    left: 50%;
+    width: 340px;
+    position:relative;
+}
+
+
+#dropurl{
+    position: relative;
+    left: 15%;
+    width: 10%;
+    text-align: center;
+}
+
+.container{
+    height: 100%;
+}

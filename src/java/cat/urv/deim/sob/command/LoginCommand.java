@@ -11,6 +11,7 @@ import cat.urv.deim.sob.model.IUserDao;
 import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import java.io.IOException;
+import static java.lang.System.out;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -39,7 +40,7 @@ public class LoginCommand implements Command {
                 loginCookie.setMaxAge(30 * 60); //expire in 30 min
                 usuari.setId(idUser.getId());
                 response.addCookie(loginCookie);
-                userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
+                userSession.setAttribute(Config.ATTR_SERVLET_USER, idUser);
             }
         } catch (DaoException ex) {
             ex.printStackTrace();

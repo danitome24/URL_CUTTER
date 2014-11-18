@@ -54,7 +54,11 @@ public class UserDaoImp implements IUserDao {
 
             userDb = rs.getString(Config.ATTR_USER_USERNAME);
             if (u.getUserName().equals(userDb)) {
-                userId.setId(rs.getInt("id"));
+                userId.setId(rs.getInt(Config.ATTR_USER_ID));
+                userId.setEmail(rs.getString(Config.ATTR_USER_EMAIL));
+                userId.setUserName(rs.getString(Config.ATTR_USER_USERNAME));
+                userId.setLastName(rs.getString(Config.ATTR_USER_LASTNAME));
+                userId.setFirstName(rs.getString(Config.ATTR_USER_FIRSTNAME));
             }
             return userId;
         } catch (Exception ex) {
