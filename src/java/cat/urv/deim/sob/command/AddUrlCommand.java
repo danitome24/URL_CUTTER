@@ -10,6 +10,7 @@ import cat.urv.deim.sob.DaoException;
 import cat.urv.deim.sob.model.IUrlDao;
 import cat.urv.deim.sob.model.Url;
 import cat.urv.deim.sob.model.UrlDaoFactory;
+import cat.urv.deim.sob.model.User;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.security.MessageDigest;
@@ -33,7 +34,7 @@ public class AddUrlCommand implements Command {
         String urlName = null;
         urlName = request.getParameter(Config.ATTR_URL_NAME);
         HttpSession session = request.getSession(false);
-        int idUser = (int) session.getAttribute(Config.ATTR_SERVLET_ID);
+        User idUser = (User) session.getAttribute(Config.ATTR_SERVLET_USER);
         out.println(idUser);
         if (urlName != null) {
             Url url = new Url();
@@ -43,7 +44,7 @@ public class AddUrlCommand implements Command {
                 boolean insert = false;
                 String hashUrl = getHashUrl(url.getUrl());
                 url.setUrlShort(hashUrl);
-                insert = urlDao.addUrl(url, idUser);
+                insert = urlDao.addUrl(url, idUser.getId());
                 if (insert) {
                     String urlShortAll = "http://localhost:8080/SOB/url/"+url.getUrlShort();
                     session.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
