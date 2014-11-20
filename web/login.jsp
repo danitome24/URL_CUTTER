@@ -25,7 +25,7 @@
     <body>
         <%
             IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
-            User user = new User();
+            User newUser = new User();
             boolean trobat = false;
             String userName = null;
             Cookie[] cookies = request.getCookies();
@@ -36,13 +36,12 @@
                     }
                 }
                 if (userName != null) {
-                    user.setUserName(userName);
-                    User id = userDAO.findUserByName(user);
-                    if (id.getId() !=-1) {
-                        user.setId(id.getId());
+                    newUser.setUserName(userName);
+                    User user = userDAO.findUserByName(newUser);
+                    if (user.getId() !=-1) {
                         HttpSession userSession = request.getSession(true);
                         userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=0");
                     }
                 }
             }

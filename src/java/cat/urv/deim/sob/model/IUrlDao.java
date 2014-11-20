@@ -13,7 +13,8 @@ import java.util.Collection;
  * @author danie_000
  */
 public interface IUrlDao {
-    public boolean addUrl(Url urln ,int idUser) throws DaoException;
-    public Collection showUrl(int i) throws DaoException;
+    public boolean addUrl(Url url ,int idUser) throws DaoException;
+    public Collection showUrl(int i, int page) throws DaoException;
     public Url getLongUrl(String shortUrl, int id) throws DaoException;
+    public int getNumberOfRow();
 }

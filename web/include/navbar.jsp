@@ -7,7 +7,7 @@
 
     <div class="container-fluid">
         <div class="navbar-header">               
-            <a href="index.jsp" class="navbar-brand" id="navhead">URL Cutter</a>
+            <a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=0" class="navbar-brand" id="navhead">URL Cutter</a>
         </div>
         <div class="dropdown navbar-brand" id="dropurl">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="menuurl">Manage </a>

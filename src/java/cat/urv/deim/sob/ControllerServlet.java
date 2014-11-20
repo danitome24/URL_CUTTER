@@ -23,6 +23,7 @@ public class ControllerServlet extends HttpServlet {
         this.commands.put("addurl", new AddUrlCommand());
         this.commands.put("redirect", new RedirectCommand());
         this.commands.put("changePass", new ChangePassCommand());
+        this.commands.put("showUrl", new ShowUrlCommand());
     }
 
     protected void processCommand(

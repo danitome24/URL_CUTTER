@@ -33,15 +33,18 @@
         <div class="row" id="divurl">
             <div class="col-md-offset-4 col-md-8 colored border-radius" >
                 <table id="idtable">
-                    <%
-                        UrlDaoImp urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
+                    <%  UrlDaoImp urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
+
                         HttpSession userSession = request.getSession(false);
-                        User idUser = (User)userSession.getAttribute(Config.ATTR_SERVLET_USER);
-                        Collection urlCol = urlDao.showUrl(idUser.getId());
+                        User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
+                        Collection urlCol = (Collection)userSession.getAttribute(Config.ATTR_URL_NAME);
+                        int numOfPages =(Integer) userSession.getAttribute("numPage");
+                      
                         Iterator it = urlCol.iterator();
                         while (it.hasNext()) {
-                            Url urlShow = (Url)it.next();
+                            Url urlShow = (Url) it.next();
                             String url = urlShow.getUrl();
+                            String urlShort = urlShow.getUrlShort();
                             int nVisits = urlShow.getNumVisits();
                     %>
                     <tr>
@@ -53,8 +56,15 @@
                         </td>
                     </tr>
                     <% }%>
-                </table>    
+                </table>
             </div>
+            <nav class="col-md-offset-6">
+                <ul class="pagination">
+                    <% for(int i=0;i<=numOfPages;i++){ %>                    
+                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=i%>"i><%=i %></a></li>
+                    <% } %>
+                </ul>
+            </nav>
         </div>
     </body>
 </html>

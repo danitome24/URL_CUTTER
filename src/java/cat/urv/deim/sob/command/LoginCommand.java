@@ -11,7 +11,6 @@ import cat.urv.deim.sob.model.IUserDao;
 import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import java.io.IOException;
-import static java.lang.System.out;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -46,8 +45,7 @@ public class LoginCommand implements Command {
             ex.printStackTrace();
         }
         if (isValid) {
-            ServletContext context = request.getSession().getServletContext();
-            context.getRequestDispatcher("/index.jsp").forward(request, response);
+            response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=0");
         } else {
 
             ServletContext context = request.getSession().getServletContext();
