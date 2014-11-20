@@ -124,7 +124,7 @@ public class UrlDaoImp implements IUrlDao {
     private Connection createConnection() throws Exception {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            return DriverManager.getConnection("jdbc:derby://localhost:1527/SOB_DB", "root", "root");
+            return DriverManager.getConnection("jdbc:derby://localhost:1527/SOB_P1_DB", "root", "root");
         } catch (Exception ex) {
             ex.printStackTrace();
             throw ex;

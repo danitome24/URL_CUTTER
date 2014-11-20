@@ -9,4 +9,5 @@ public interface IUserDao {
     public User findUserByEmail(String email) throws DaoException;
     public boolean login(User u) throws DaoException;
     public boolean updatePassword(String s,int i) throws DaoException;
+    public boolean userPassIsCorrect(User user) throws DaoException;
 }

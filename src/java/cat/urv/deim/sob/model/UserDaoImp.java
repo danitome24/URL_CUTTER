@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -59,6 +61,7 @@ public class UserDaoImp implements IUserDao {
                 userId.setUserName(rs.getString(Config.ATTR_USER_USERNAME));
                 userId.setLastName(rs.getString(Config.ATTR_USER_LASTNAME));
                 userId.setFirstName(rs.getString(Config.ATTR_USER_FIRSTNAME));
+                userId.setPassword(rs.getString(Config.ATTR_USER_PASSWORD));
             }
             return userId;
         } catch (Exception ex) {
@@ -159,11 +162,37 @@ public class UserDaoImp implements IUserDao {
                 try {if (con != null) {con.close();}} catch (Exception ex) {}
             }  
     }
+    @Override
+    public boolean userPassIsCorrect(User user) throws DaoException{
+        boolean exists = false;
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {
+            con = createConnection();
+            String sql = "SELECT * FROM usuari where usuari.\"USERNAME\"= ? ";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, ((User) user).getUserName());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            String pass = rs.getString(Config.ATTR_USER_PASSWORD);
+            if (user.getPassword().equals(pass)){
+                exists = true;
+                out.println("Contraseña correcta");
+            }
+            else{
+                out.println("Contraseña incorrecta");
+            }
+        } catch (Exception ex) {
+            throw new DaoException(ex.getMessage());
+        }
+        return exists;
+    }
 
     private Connection createConnection() throws Exception {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            return DriverManager.getConnection("jdbc:derby://localhost:1527/SOB_DB", "root", "root");
+            return DriverManager.getConnection("jdbc:derby://localhost:1527/SOB_P1_DB", "root", "root");
+            //SOB_DB o SOB_P1_DB
         } catch (Exception ex) {
             ex.printStackTrace();
             throw ex;
