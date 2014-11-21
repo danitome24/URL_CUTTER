@@ -11,7 +11,7 @@ package cat.urv.deim.sob.model;
  */
 public class Url {
     private String url;
-    private int idUser;
+    private int idUrl;
     private String urlShort;
     private int num_visits;
     
@@ -21,8 +21,11 @@ public class Url {
     public void setUrl(String url){
         this.url=url;
     }
-    public int getIdUser(){
-        return this.idUser;
+    public int getIdUrl(){
+        return this.idUrl;
+    }
+    public void setIdUrl(int id){
+        this.idUrl = id;
     }
     public int getNumVisits(){
         return this.num_visits;

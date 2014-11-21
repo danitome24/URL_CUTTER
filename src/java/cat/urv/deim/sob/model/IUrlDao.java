@@ -16,5 +16,7 @@ public interface IUrlDao {
     public boolean addUrl(Url url ,int idUser) throws DaoException;
     public Collection showUrl(int i, int page) throws DaoException;
     public Url getLongUrl(String shortUrl, int id) throws DaoException;
+    public Url findByUrlShort(Url url)throws DaoException;
+    public boolean findRelationByUrl(int url,int user)throws DaoException;
     public int getNumberOfRow();
 }
