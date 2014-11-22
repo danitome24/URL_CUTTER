@@ -32,11 +32,11 @@ public class AddUrlCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String urlName = null;
-        HttpSession usersession = request.getSession(false);
+        HttpSession userSession = request.getSession(false);
         Url urlFind = null;
         urlName = request.getParameter(Config.ATTR_URL_NAME);
-        if (urlName.length() > 0) {
-            User idUser = (User) usersession.getAttribute(Config.ATTR_SERVLET_USER);
+        if (urlName.length() > 26) {
+            User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
             out.println("Pasa el filtro de tamaño");
             out.println("ID_USER: "+idUser.getId());
             if (urlName != null) {
@@ -69,7 +69,7 @@ public class AddUrlCommand implements Command {
                         }
                     }
                     String urlShortAll = "http://localhost:8080/SOB/url/" + url.getUrlShort();
-                    usersession.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
+                    userSession.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
                     ServletContext context = request.getSession().getServletContext();
                     context.getRequestDispatcher("/addurl.jsp").forward(request, response);
                 } catch (DaoException ex) {
@@ -82,6 +82,7 @@ public class AddUrlCommand implements Command {
             }
         } else {
             out.println("URL MUY CORTA");
+            userSession.setAttribute("lengthUrl", "No tiene la suficiente longitud");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         }

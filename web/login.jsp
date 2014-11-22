@@ -21,6 +21,7 @@
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/javascript.js"></script>
+        <link rel="SHORTCUT ICON" href="fonts/1198.png">
     </head>
     <body>
         <%
@@ -28,18 +29,18 @@
             User newUser = new User();
             boolean trobat = false;
             String userName = null;
+            HttpSession userSession = request.getSession(true);
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals(Config.COOKIE_USER)) {
-                        userName = cookie.getValue();                      
+                        userName = cookie.getValue();
                     }
                 }
                 if (userName != null) {
                     newUser.setUserName(userName);
                     User user = userDAO.findUserByName(newUser);
-                    if (user.getId() !=-1) {
-                        HttpSession userSession = request.getSession(true);
+                    if (user.getId() != -1) {
                         userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
                         response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
                     }
@@ -62,8 +63,17 @@
                             <div class="col-sm-10">
                                 <input required="" type="password" name="password" class="form-control" id="password" onblur="check_values()" onkeydown="check_values()" placeholder="Password">
                                 <a class="col-md-12" href="rememberPass.jsp">Recordar contrasenya</a>
-                            </div>                         
+                            </div>                          
                         </div>
+                        <%
+                            if (null != userSession.getAttribute("errorLogin")) {%>
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>ERROR!</strong> Usuari o contrasenya incorrecte.
+                        </div>
+                        <%
+                            }
+                        %>
                         <div class="form-group" id="positionLogin">
                             <div class="col-sm-10">
                                 <button type="submit" id="buttonSubmit" class="btn btn-default wide hidden"><span class="glyphicon glyphicon-ok med"></span></button>

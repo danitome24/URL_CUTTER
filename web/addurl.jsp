@@ -22,6 +22,7 @@
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/javascript.js"></script>
+        <link rel="SHORTCUT ICON" href="fonts/1198.png">
         <title>JSP Page</title>
     </head>
     <body>
@@ -51,6 +52,16 @@
                             </tr>
                         </table>
                         <output name="x" for="a b"><%= urlShort%></output>
+                        <%
+                            if(userSession.getAttribute("lengthUrl") != null){
+                        %>
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>ERROR!</strong> URL massa curta!.
+                        </div>
+                        <%
+                            }
+                        %>
                         <div class="row">
                             <div class="col-md-6">
                                 <p>

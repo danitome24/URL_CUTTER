@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group col-md-6 has-success">
                             <label for="pwd">Contrasenya:    <span class="glyphicon glyphicon-question-sign"></span></label>
-                            <input required="" name="password" type="password" class="form-control" id="pwd1" placeholder="Contrasenya">
+                            <input required="" name="password1" type="password" class="form-control" id="pwd1" placeholder="Contrasenya">
                             
                         </div>
                         <div class="form-group col-md-6 has-success">
@@ -51,8 +51,19 @@
                         
                         <div class="form-group col-md-6 has-success">
                             <label for="pwd"> Confirma la contrasenya:</label>
-                            <input required="" type="password" class="form-control" id="pwd2" placeholder="Contrasenya">
-                        </div>     
+                            <input required="" name="password2" type="password" class="form-control" id="pwd2" placeholder="Contrasenya">
+                        </div>
+                        <%
+                          
+                          if(request.getAttribute("pass") != null) {  
+                        %>
+                         <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>ERROR!</strong> Contrasenya no coincideix.
+                        </div>
+                        <%
+                          }
+                        %>
                         <button type="submit" class="btn btn-info col-md-4 col-md-offset-7">Submit</button>
                     </form>
                 </div>

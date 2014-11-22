@@ -27,13 +27,14 @@ public class LoginCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User usuari = new User();
         boolean isValid = false;
+        HttpSession userSession = request.getSession(true);
         usuari.setUserName(request.getParameter(Config.ATTR_USER_USERNAME));
         usuari.setPassword(request.getParameter(Config.ATTR_USER_PASSWORD));
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
+        //userSession.setAttribute("errorLogin","");
         try {
             isValid = userDAO.login(usuari);
-            if (isValid) {
-                HttpSession userSession = request.getSession(true);
+            if (isValid) {            
                 User idUser = userDAO.findUserByName(usuari);
                 Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
                 loginCookie.setMaxAge(30 * 60); //expire in 30 min
@@ -47,7 +48,7 @@ public class LoginCommand implements Command {
         if (isValid) {
             response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
         } else {
-
+            userSession.setAttribute("errorLogin","El usuario no se encuentra registrado");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/login.jsp").forward(request, response);
         }

@@ -23,6 +23,7 @@
         <link href="css/navbar.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <link rel="SHORTCUT ICON" href="fonts/1198.png">
         <script src="js/javascript.js"></script>
     </head>
     <body>
@@ -39,7 +40,6 @@
                         User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
                         Collection urlCol = (Collection)userSession.getAttribute(Config.ATTR_URL_NAME);
                         int numOfPages =(Integer) userSession.getAttribute("numPage");
-                      
                         Iterator it = urlCol.iterator();
                         while (it.hasNext()) {
                             Url urlShow = (Url) it.next();
@@ -49,19 +49,36 @@
                     %>
                     <tr>
                         <td>
-                            <strong><%= url%></strong>
+                            <p><%= url%></p>
                         </td>
                         <td>
-                            <strong><%= nVisits%></strong>
+                            <p><%= "http://localhost:8080/SOB/url/"+urlShort%></p>
+                        </td>
+                        <td>
+                            <p><%= nVisits%></p>
                         </td>
                     </tr>
                     <% }%>
                 </table>
             </div>
             <nav class="col-md-offset-6">
+                <%
+                    int currentPage =Integer.parseInt(request.getParameter("page"));
+                    System.out.println(currentPage);
+                %>
                 <ul class="pagination">
+                    <%
+                        if(currentPage-1 > 0){
+                    %>
+                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage-1%>"> < </a></li>
+                    <% } %>
                     <% for(int i=1;i<=numOfPages;i++){ %>                    
                     <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=i%>"i><%=i %></a></li>
+                    <% } %>
+                    <%
+                        if(currentPage+1 <= numOfPages){
+                    %>
+                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage+1%>"> > </a></li>
                     <% } %>
                 </ul>
             </nav>

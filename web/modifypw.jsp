@@ -17,6 +17,7 @@
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/javascript.js"></script>
+        <link rel="SHORTCUT ICON" href="fonts/1198.png">
     </head>
     <body>
         <%@ include file="/include/navbar.jsp" %>
