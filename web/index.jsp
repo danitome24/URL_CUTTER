@@ -31,7 +31,7 @@
             Testing div URL container
         --> 
         <div class="row" id="divurl">
-            <div class="col-md-offset-4 col-md-8 colored border-radius" >
+            <div class="col-md-offset-2 col-md-11 colored border-radius" >
                 <table id="idtable">
                     <%  UrlDaoImp urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
 

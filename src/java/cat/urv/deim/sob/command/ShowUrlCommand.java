@@ -39,8 +39,9 @@ public class ShowUrlCommand implements Command {
         try {
             Collection allUrl = urlDao.showUrl(user.getId(),page);
             userSession.setAttribute(Config.ATTR_URL_NAME, allUrl);
-            int numOfRow = urlDao.getNumberOfRow();
-            int numOfPages =(int) numOfRow / recordPage;
+            float numOfRow = urlDao.getNumberOfRow();
+            float division = numOfRow / recordPage;
+            int numOfPages = (int)Math.ceil(division);
             out.println("Nmber of pages: "+numOfPages);
 
             userSession.setAttribute("numPage", numOfPages);
