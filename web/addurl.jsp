@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <p>
-                                    <a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=0" class="btn btn-danger btn-block">Aceptar</a>
+                                    <a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1" class="btn btn-danger btn-block">Aceptar</a>
                                 </p>
                             </div>
                         </div>

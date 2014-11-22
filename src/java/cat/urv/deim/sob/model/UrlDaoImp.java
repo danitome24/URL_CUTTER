@@ -29,28 +29,31 @@ public class UrlDaoImp implements IUrlDao {
         PreparedStatement ps = null;
         Connection con = null;
         boolean insert = false;
+        boolean insertRel = false;
         try {
             con = createConnection();
-            String sql = "SELECT * FROM URL";
+            String sql = "INSERT INTO URL (URL,URL_SHORT,NUM_VISITS) VALUES (?,?,?)";
             ps=con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            
-            
-            /*con = createConnection();
-            String sql = "INSERT INTO URL (URL,NUM_VISITS,URL_SHORT) VALUES (?,?,?)";
-            ps = con.prepareStatement(sql);
             ps.setString(1, url.getUrl());
-            ps.setInt(2, 0);
-            ps.setString(3, url.getUrlShort());
+            ps.setString(2, url.getUrlShort());
+            ps.setInt(3, 0);
             ps.executeUpdate();
-            String sql2="INSERT INTO URL_USER (ID_URL,ID_USER) VALUES (?,?)";
-            ps = con.prepareStatement(sql2);
-            ps.setInt(1,url.getIdUrl());
-            ps.setInt(2, idUser);
-            ps.executeUpdate();
-            out.println("La nueva URL ha sido introducida corectamente en la BD");
-            insert = true;*/
-            return true;
+            insert = true;
+            //Buscamos la id de la url introducida
+            String sql2 = "SELECT ID_URL FROM URL WHERE URL_SHORT = ?";
+            ps=con.prepareStatement(sql2);
+            ps.setString(1, url.getUrlShort());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                url.setIdUrl(rs.getInt("ID_URL"));
+                out.println("URL INTRODUCIDA"+url.getIdUrl());         
+                out.println("Insertada en la tabla de URL");
+                insertRel = insertRelation(url.getIdUrl(),idUser);
+                out.println("Insertada en la tabla de Relacion");
+            }
+            out.println(insertRel && insert);
+            boolean isDone = insertRel && insert;
+            return isDone;
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new DaoException(ex.getMessage());
@@ -62,22 +65,24 @@ public class UrlDaoImp implements IUrlDao {
     }
     @Override
     public Url findByUrlShort(Url url) throws DaoException{
-        Url urlFind = null;
+        Url urlFind = new Url();
         PreparedStatement ps = null;
         Connection con = null;
         ResultSet rs = null;
+        out.println("Voy a buscar la siguente url corta: "+url.getUrlShort());
         
         try {
             con = createConnection();
-            String sql = "SELECT * FROM URL WHERE ID_URL=?";
+            String sql = "SELECT * FROM URL WHERE URL_SHORT=?";
             ps = con.prepareStatement(sql);
-            ps.setInt(1, url.getIdUrl());
+            ps.setString(1, url.getUrlShort());
             rs = ps.executeQuery();
             if(rs.next()){
                 urlFind.setIdUrl(rs.getInt("ID_URL"));
-                urlFind.setUrl(rs.getString("URL"));
                 urlFind.setUrlShort(rs.getString("URL_SHORT"));
-                urlFind.setNumVisits(rs.getInt("NUM_VISITS"));
+                out.println("HAY URL IGUAL");
+            } else{
+                out.println("NO HAY URL IGUAL");
             }
              return urlFind;
         } catch (Exception ex) {
@@ -89,6 +94,30 @@ public class UrlDaoImp implements IUrlDao {
                 }
     }
     
+    @Override
+    public boolean insertRelation(int idUrl, int idUser)throws DaoException{
+        boolean insert = false;
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {
+            con = createConnection();
+            String sql = "INSERT INTO URL_USER (ID_URL,ID_USER) VALUES (?,?)";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idUrl);
+            ps.setInt(2, idUser);
+            ps.executeUpdate();
+            insert = true;
+            return insert;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new DaoException(ex.getMessage());
+        }finally{
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        }
+    }
+    
+    @Override
     public boolean findRelationByUrl(int url,int user)throws DaoException{
         PreparedStatement ps = null;
         Connection con = null;
@@ -97,6 +126,7 @@ public class UrlDaoImp implements IUrlDao {
         try {
             con = createConnection();
             String sql = "SELECT * FROM URL_USER WHERE ID_URL = ? AND ID_USER = ?";
+            ps = con.prepareStatement(sql);
             ps.setInt(1, url);
             ps.setInt(2, user);
             rs = ps.executeQuery();
@@ -113,22 +143,28 @@ public class UrlDaoImp implements IUrlDao {
         }
     }
 
+    @Override
     public Collection showUrl(int id, int page) throws DaoException {
         PreparedStatement ps = null;
         Connection con = null;
         ResultSet rs = null;
         Collection retornUrl = new LinkedList();
         int urlPage = 5;
-        int offset = (urlPage-1)*page;
+        int offset = urlPage*(page-1);
         try {
             con = createConnection();
-            String sql = "SELECT URL,URL_SHORT,NUM_VISITS FROM URL WHERE ID_USER=? OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+            String sql =    "SELECT *\n" +
+                            "FROM URL U\n" +
+                            "LEFT JOIN URL_USER U2\n" +
+                            "ON U.ID_URL=U2.ID_URL\n" +
+                            "WHERE U2.ID_USER = ?\n" +
+                            "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.setInt(2, offset);
             rs = ps.executeQuery();
             
-            String sqlRow = "SELECT COUNT(ID_USER) FROM URL WHERE ID_USER=?";
+            String sqlRow = "SELECT COUNT(ID_USER) FROM URL_USER WHERE ID_USER = ?";
             ps = con.prepareStatement(sqlRow);
             ps.setInt(1, id);
             ResultSet rsRow = ps.executeQuery();
@@ -157,7 +193,7 @@ public class UrlDaoImp implements IUrlDao {
     }
 
     @Override
-    public Url getLongUrl(String shortUrl, int idUser) throws DaoException {
+    public Url getLongUrl(String shortUrl) throws DaoException {
         PreparedStatement ps = null;
 
         Connection con = null;
@@ -167,11 +203,12 @@ public class UrlDaoImp implements IUrlDao {
             con = createConnection();
             String sql = "SELECT URL FROM URL WHERE URL_SHORT = ?";
             ps = con.prepareStatement(sql);
-            ps.setString(1, (String) shortUrl);
+            ps.setString(1, shortUrl);
             rs = ps.executeQuery();
-            rs.next();
-            url.setUrl(rs.getString(Config.ATTR_URL_NAME));
-            updateVisits(idUser, url.getUrl());
+            if(rs.next()){
+                url.setUrl(rs.getString("URL"));
+                updateVisits(url.getUrl());
+            }
             return url;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -183,15 +220,14 @@ public class UrlDaoImp implements IUrlDao {
 
     }
 
-    private void updateVisits(int idUser, String url) throws DaoException {
+    private void updateVisits(String url) throws DaoException {
         PreparedStatement ps2 = null;
         Connection con2 = null;
         try {
             con2 = createConnection();
-            String sqlUpdateVis = "UPDATE URL SET NUM_VISITS = NUM_VISITS+1 WHERE ID_USER = ? AND URL=?";
+            String sqlUpdateVis = "UPDATE URL SET NUM_VISITS = NUM_VISITS+1 WHERE URL=?";
             ps2 = con2.prepareStatement(sqlUpdateVis);
-            ps2.setInt(1, idUser);
-            ps2.setString(2, url);
+            ps2.setString(1, url);
             ps2.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(UrlDaoImp.class.getName()).log(Level.SEVERE, null, ex);

@@ -32,10 +32,8 @@ public class RedirectCommand implements Command {
         out.println("Hay que redirigir desde este hash: " + path);
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
-            HttpSession userSession = request.getSession(false);
             path = path.substring(1, path.length());
-            User user = (User)userSession.getAttribute(Config.ATTR_SERVLET_USER);
-            Url url = urlDao.getLongUrl(path,user.getId());
+            Url url = urlDao.getLongUrl(path);
             longUrl = url.getUrl();
             
             if (longUrl != null) {                

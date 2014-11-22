@@ -41,7 +41,7 @@
                     if (user.getId() !=-1) {
                         HttpSession userSession = request.getSession(true);
                         userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
-                        response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=0");
+                        response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
                     }
                 }
             }

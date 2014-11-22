@@ -52,7 +52,7 @@ public class FormCommand implements Command {
             }
 
             ServletContext context = request.getSession().getServletContext();
-            context.getRequestDispatcher("/index.jsp").forward(request, response);
+            context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
         } catch (DaoException ex) {
             ex.printStackTrace();
         }

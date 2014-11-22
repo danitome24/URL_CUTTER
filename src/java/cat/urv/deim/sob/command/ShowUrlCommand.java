@@ -13,8 +13,6 @@ import cat.urv.deim.sob.model.User;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

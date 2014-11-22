@@ -60,7 +60,7 @@
             </div>
             <nav class="col-md-offset-6">
                 <ul class="pagination">
-                    <% for(int i=0;i<=numOfPages;i++){ %>                    
+                    <% for(int i=1;i<=numOfPages;i++){ %>                    
                     <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=i%>"i><%=i %></a></li>
                     <% } %>
                 </ul>

@@ -45,7 +45,7 @@ public class LoginCommand implements Command {
             ex.printStackTrace();
         }
         if (isValid) {
-            response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=0");
+            response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
         } else {
 
             ServletContext context = request.getSession().getServletContext();

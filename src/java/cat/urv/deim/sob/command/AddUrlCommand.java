@@ -37,9 +37,11 @@ public class AddUrlCommand implements Command {
         urlName = request.getParameter(Config.ATTR_URL_NAME);
         if (urlName.length() > 0) {
             User idUser = (User) usersession.getAttribute(Config.ATTR_SERVLET_USER);
-            out.println(idUser);
+            out.println("Pasa el filtro de tamaño");
+            out.println("ID_USER: "+idUser.getId());
             if (urlName != null) {
                 Url url = new Url();
+                out.println("URL != NULL");
                 url.setUrl(urlName);
                 IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
                 try {
@@ -47,27 +49,29 @@ public class AddUrlCommand implements Command {
                     String hashUrl = getHashUrl(url.getUrl());
                     url.setUrlShort(hashUrl);
                     urlFind = urlDao.findByUrlShort(url);
-                    if (urlFind == null) {
+                    url.setIdUrl(urlFind.getIdUrl());
+                    if (urlFind.getUrlShort() == null) {
+                        out.println("No hay URL igual en la base de datos");
                         insert = urlDao.addUrl(url, idUser.getId());
                         if (insert) {
-                            String urlShortAll = "http://localhost:8080/SOB/url/" + url.getUrlShort();
-                            usersession.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
-                            ServletContext context = request.getSession().getServletContext();
-                            context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+                            out.println("Se ha insertado la nueva URL");                           
                         } else {
-                            out.println("NO SE HA PODIDO INSERTAR LA URL");
-                            ServletContext context = request.getSession().getServletContext();
-                            context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+                            out.println("NO SE HA PODIDO INSERTAR LA URL");                          
                         }
                     }else{
                         boolean exists = urlDao.findRelationByUrl(url.getIdUrl(), idUser.getId());
                         if(!exists){
-                            //insert en la relacion
-                            //Falta el insert en la relacion
+                            urlDao.insertRelation(url.getIdUrl(), idUser.getId());
+                            out.println("Insert en la relacion hecha");
+                            
                         }else{
-                            out.println("YA EXISTE RELACION");
+                            out.println("YA EXISTE RELACION");                            
                         }
                     }
+                    String urlShortAll = "http://localhost:8080/SOB/url/" + url.getUrlShort();
+                    usersession.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
+                    ServletContext context = request.getSession().getServletContext();
+                    context.getRequestDispatcher("/addurl.jsp").forward(request, response);
                 } catch (DaoException ex) {
                     ex.toString();
                 } catch (NoSuchAlgorithmException ex) {
