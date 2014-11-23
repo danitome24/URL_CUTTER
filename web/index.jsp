@@ -32,14 +32,19 @@
             Testing div URL container
         --> 
         <div class="row" id="divurl">
-            <div class="col-md-offset-2 col-md-11 colored border-radius" >
-                <table id="idtable">
+            <div class=" col-md-12 colored border-radius" >
+                <table class="table table-striped">
+                    <tr>
+                        <th>URL</th>
+                        <th>Url curta</th>
+                        <th>Numero de visites</th>
+                    </tr>
                     <%  UrlDaoImp urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
 
                         HttpSession userSession = request.getSession(false);
                         User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
-                        Collection urlCol = (Collection)userSession.getAttribute(Config.ATTR_URL_NAME);
-                        int numOfPages =(Integer) userSession.getAttribute("numPage");
+                        Collection urlCol = (Collection) userSession.getAttribute(Config.ATTR_URL_NAME);
+                        int numOfPages = (Integer) userSession.getAttribute("numPage");
                         Iterator it = urlCol.iterator();
                         while (it.hasNext()) {
                             Url urlShow = (Url) it.next();
@@ -49,13 +54,13 @@
                     %>
                     <tr>
                         <td>
-                            <p><%= url%></p>
+                            <%= url%>
                         </td>
                         <td>
-                            <p><%= "http://localhost:8080/SOB/url/"+urlShort%></p>
+                            <%=urlShort%>
                         </td>
                         <td>
-                            <p><%= nVisits%></p>
+                            <%= nVisits%>
                         </td>
                     </tr>
                     <% }%>
@@ -63,23 +68,23 @@
             </div>
             <nav class="col-md-offset-6">
                 <%
-                    int currentPage =Integer.parseInt(request.getParameter("page"));
+                    int currentPage = Integer.parseInt(request.getParameter("page"));
                     System.out.println(currentPage);
                 %>
                 <ul class="pagination">
                     <%
-                        if(currentPage-1 > 0){
+                        if (currentPage - 1 > 0) {
                     %>
-                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage-1%>"> < </a></li>
-                    <% } %>
-                    <% for(int i=1;i<=numOfPages;i++){ %>                    
-                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=i%>"i><%=i %></a></li>
-                    <% } %>
-                    <%
-                        if(currentPage+1 <= numOfPages){
-                    %>
-                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage+1%>"> > </a></li>
-                    <% } %>
+                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage - 1%>"> < </a></li>
+                        <% } %>
+                        <% for (int i = 1; i <= numOfPages; i++) {%>                    
+                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=i%>"i><%=i%></a></li>
+                        <% } %>
+                        <%
+                            if (currentPage + 1 <= numOfPages) {
+                        %>
+                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage + 1%>"> > </a></li>
+                        <% }%>
                 </ul>
             </nav>
         </div>

@@ -158,10 +158,11 @@ public class UrlDaoImp implements IUrlDao {
                             "LEFT JOIN URL_USER U2\n" +
                             "ON U.ID_URL=U2.ID_URL\n" +
                             "WHERE U2.ID_USER = ?\n" +
-                            "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+                            "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.setInt(2, offset);
+            ps.setInt(3, Config.NUM_OF_ROWS_PER_PAGE);
             rs = ps.executeQuery();
             
             String sqlRow = "SELECT COUNT(ID_USER) FROM URL_USER WHERE ID_USER = ?";

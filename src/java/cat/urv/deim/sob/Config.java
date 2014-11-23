@@ -28,5 +28,6 @@ public class Config {
     public static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     public static final int RANDOM_STRING_LENGTH = 10;
     public static final String ATTR_URL_URLSHORT = "shortUrl";
+    public static final int NUM_OF_ROWS_PER_PAGE = 10;
     
 }

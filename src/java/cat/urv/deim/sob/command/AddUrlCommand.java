@@ -31,76 +31,44 @@ public class AddUrlCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Url url = new Url();
+        out.println("ADD URL COMMAND");
         String urlName = null;
         HttpSession userSession = request.getSession(false);
-        Url urlFind = null;
-        urlName = request.getParameter(Config.ATTR_URL_NAME);
-        if (urlName.length() > 26) {
-            User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
-            out.println("Pasa el filtro de tamaño");
-            out.println("ID_USER: "+idUser.getId());
-            if (urlName != null) {
-                Url url = new Url();
-                out.println("URL != NULL");
-                url.setUrl(urlName);
-                IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
-                try {
-                    boolean insert = false;
-                    String hashUrl = getHashUrl(url.getUrl());
-                    url.setUrlShort(hashUrl);
-                    urlFind = urlDao.findByUrlShort(url);
-                    url.setIdUrl(urlFind.getIdUrl());
-                    if (urlFind.getUrlShort() == null) {
-                        out.println("No hay URL igual en la base de datos");
-                        insert = urlDao.addUrl(url, idUser.getId());
-                        if (insert) {
-                            out.println("Se ha insertado la nueva URL");                           
-                        } else {
-                            out.println("NO SE HA PODIDO INSERTAR LA URL");                          
-                        }
-                    }else{
-                        boolean exists = urlDao.findRelationByUrl(url.getIdUrl(), idUser.getId());
-                        if(!exists){
-                            urlDao.insertRelation(url.getIdUrl(), idUser.getId());
-                            out.println("Insert en la relacion hecha");
-                            
-                        }else{
-                            out.println("YA EXISTE RELACION");                            
-                        }
-                    }
-                    String urlShortAll = "http://localhost:8080/SOB/url/" + url.getUrlShort();
-                    userSession.setAttribute(Config.ATTR_URL_URLSHORT, urlShortAll);
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/addurl.jsp").forward(request, response);
-                } catch (DaoException ex) {
-                    ex.toString();
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(AddUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
+        User user = (User)userSession.getAttribute(Config.ATTR_SERVLET_USER);
+        Url urlFind = new Url();
+        url.setUrl(request.getParameter("url"));
+        url.setUrlShort(request.getParameter("urlShort"));
+        out.println("URL SHORT: "+url.getUrlShort());
+        IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
+        try {
+            boolean insert = false;
+            urlFind = urlDao.findByUrlShort(url);
+            url.setIdUrl(urlFind.getIdUrl());
+            if (urlFind.getUrlShort() == null) {
+                out.println("No hay URL igual en la base de datos");
+                insert = urlDao.addUrl(url, user.getId());
+                if (insert) {
+                    out.println("Se ha insertado la nueva URL");
+                } else {
+                    out.println("NO SE HA PODIDO INSERTAR LA URL");
                 }
             } else {
-                out.println("NO HAY URL I/O SESION");
+                boolean exists = urlDao.findRelationByUrl(url.getIdUrl(), user.getId());
+                if (!exists) {
+                    urlDao.insertRelation(url.getIdUrl(), user.getId());
+                    out.println("Insert en la relacion hecha");
+                } else {
+                    out.println("YA EXISTE RELACION");
+                }
             }
-        } else {
-            out.println("URL MUY CORTA");
-            userSession.setAttribute("lengthUrl", "No tiene la suficiente longitud");
+            request.setAttribute("insertUrl", "Url insertada");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+        } catch (DaoException ex) {
+            ex.toString();
         }
-    }
 
-    private String getHashUrl(String url) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA1");
-        out.println("HOLAAA");
-        md.reset();
-        byte[] buffer = url.getBytes();
-        md.update(buffer);
-        byte[] digest = md.digest();
-
-        String hexStr = "";
-        for (int i = 0; i < 3; i++) {
-            hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
-        }
-        return hexStr;
     }
 
 }

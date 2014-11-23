@@ -27,53 +27,98 @@
     </head>
     <body>
         <%@ include file="/include/navbar.jsp" %>
-        <%
-            User u = new User();
+        <%            User u = new User();
             HttpSession userSession = request.getSession(false);
-            String urlShort = (String) userSession.getAttribute(Config.ATTR_URL_URLSHORT);
-        %>
+            
 
+        %>
         <div class="row" >
             <div class="col-md-4 col-md-offset-4  colored border-login">
                 <h2>URL</h2>
                 <span class="glyphicon glyphicon-globe"></span>
+                <%                    if (request.getAttribute("urlCorta") != null) {
+                %>
                 <form class="form-horizontal" role="form" method="post" action="addurl.do">
                     <input type="hidden" name="form_action" value="addurl" />
-                    <div class="col-sm-10">                        
-                        <table id ="tableurl">
-                            <tr>
-                                <td id="inputurl">
-                                    <input required="" type="text" name="url" class="form-control"> 
-
-                                </td>
-                                <td id="buttoncut">
-                                    <button type="submit" class="btn btn-info" >Cutter</button>
-                                </td>
-                            </tr>
-                        </table>
-                        <output name="x" for="a b"><%= urlShort%></output>
-                        <%
-                            if(userSession.getAttribute("lengthUrl") != null){
-                        %>
-                        <div class="alert alert-danger">
-                            <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> URL massa curta!.
-                        </div>
+                    <%
+                    } else {
+                    %>
+                    <form class="form-horizontal" role="form" method="post" action="cut.do">
+                        <input type="hidden" name="form_action" value="cutUrl" />
                         <%
                             }
                         %>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>
-                                    <a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1" class="btn btn-danger btn-block">Aceptar</a>
-                                </p>
+                        <div class="col-md-10">                        
+                            <table id ="tableurl">
+                                <tr>
+                                    <td id="inputurl">
+                                        <%
+                                            if (request.getAttribute("urlLarga") == null) {
+                                                
+                                        %>
+                                        <input required="" placeholder="Url a escurçar" type="url" name="url" class="form-control"> 
+                                        <% } else {
+                                        String urlLong = (String) request.getAttribute("urlLarga");%>
+                                        <input value="<%=urlLong%>"  name="url" class="form-control">
+                                        <% } %>
+                                    </td>
+                                    <td id="buttoncut">
+                                        <button type="submit" class="btn btn-info" >Cutter</button>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <% if (request.getAttribute("urlCorta") != null) {
+                                String urlShort = (String) request.getAttribute("urlCorta");
+                            %>
+                            <input id="tableurl" type="url" name="urlShort" class="form-control" value="<%= urlShort%>">
+                            <%
+                                }
+                            %>
+                            <%
+                                if (request.getAttribute("lengthUrl") != null) {
+                            %>
+                            <div class="alert alert-danger">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>ERROR!</strong> URL massa curta!.
+                            </div>
+                            <%
+                                }
+                            %>
+                            <%
+                                if (request.getAttribute("insertUrl") != null) {
+                            %>
+                            <div class="alert alert-success">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>PERFECTE!</strong> URL introduida!.
+                            </div>
+                            <%
+                                }
+                            %>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table id ="tableurl">
+                                        <tr>
+                                            <%
+                                                if (request.getAttribute("urlCorta") != null) {
+                                            %>
+                                            <td>
+                                                <button type="submit" class="btn btn-success">Confirmar</button>
+                                            </td>
+                                            <%
+                                                }
+                                            %>
+                                            <td>
+                                                <a href="addurl.jsp" class="btn btn-danger btn-block">Cancelar</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
             </div>                
         </div>
     </div>
-
 </body>
 </html>
