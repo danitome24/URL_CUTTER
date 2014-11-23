@@ -25,6 +25,8 @@ public class ControllerServlet extends HttpServlet {
         this.commands.put("changePass", new ChangePassCommand());
         this.commands.put("showUrl", new ShowUrlCommand());
         this.commands.put("cutUrl", new CutUrlCommand());
+        this.commands.put("changeMail", new ChangeMailCommand());
+        this.commands.put("changeName", new ChangeNameCommand());
     }
 
     protected void processCommand(

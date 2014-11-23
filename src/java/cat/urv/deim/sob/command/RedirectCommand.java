@@ -27,12 +27,11 @@ public class RedirectCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getPathInfo();
+        String path = request.getRequestURL().toString();
         String longUrl = null;
         out.println("Hay que redirigir desde este hash: " + path);
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
-            path = path.substring(1, path.length());
             Url url = urlDao.getLongUrl(path);
             longUrl = url.getUrl();
             

@@ -31,32 +31,37 @@ public class FormCommand implements Command {
             throws ServletException, IOException {
         try {
             User usuari = new User();
+            IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
             boolean inserit = false;
-            if (request.getParameter("password1").equals(request.getParameter("password2"))) {
-                usuari.setFirstName(request.getParameter(Config.ATTR_USER_FIRSTNAME));
-                usuari.setPassword(request.getParameter(Config.ATTR_USER_PASSWORD));
-                usuari.setLastName(request.getParameter(Config.ATTR_USER_LASTNAME));
-                usuari.setUserName(request.getParameter(Config.ATTR_USER_USERNAME));
-                usuari.setEmail(request.getParameter(Config.ATTR_USER_EMAIL));
+            usuari.setFirstName(request.getParameter(Config.ATTR_USER_FIRSTNAME));
+            usuari.setPassword(request.getParameter(Config.ATTR_USER_PASSWORD));
+            usuari.setLastName(request.getParameter(Config.ATTR_USER_LASTNAME));
+            usuari.setUserName(request.getParameter(Config.ATTR_USER_USERNAME));
+            usuari.setEmail(request.getParameter(Config.ATTR_USER_EMAIL));
 
-                IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
-                inserit = userDAO.add(usuari);
-                if (inserit) {
-                    out.println("Nuevo usuario insertado en la BD");
-                    HttpSession userSession = request.getSession(true);
-                    Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
-                    loginCookie.setMaxAge(30 * 60); //expire in 30 min
-                    response.addCookie(loginCookie);
-                    User id = userDAO.findUserByName(usuari);
-                    usuari.setId(id.getId());
-                    userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
+            boolean isRepeat = userDAO.isUsernameRepeat(usuari);
+            if (!isRepeat) {
+                if (request.getParameter("password1").equals(request.getParameter("password2"))) {
+                    inserit = userDAO.add(usuari);
+                    if (inserit) {
+                        out.println("Nuevo usuario insertado en la BD");
+                        HttpSession userSession = request.getSession(true);
+                        Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
+                        loginCookie.setMaxAge(30 * 60); //expire in 30 min
+                        response.addCookie(loginCookie);
+                        User id = userDAO.findUserByName(usuari);
+                        usuari.setId(id.getId());
+                        userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
+                    }
+                    ServletContext context = request.getSession().getServletContext();
+                    context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
+                } else {
+                    request.setAttribute("pass", "pass diferentes");
+                    ServletContext context = request.getSession().getServletContext();
+                    context.getRequestDispatcher("/registre.jsp").forward(request, response);
                 }
-
-                ServletContext context = request.getSession().getServletContext();
-                context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
-            }
-            else{
-                request.setAttribute("pass", "pass diferentes");
+            } else {
+                request.setAttribute("user", "Ya existe un usuario con este nombre");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/registre.jsp").forward(request, response);
             }

@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -71,6 +73,7 @@ public class UserDaoImp implements IUserDao {
 
     }
 
+    @Override
     public boolean updatePassword(String newPass, int idUser) throws DaoException {
         PreparedStatement ps = null;
         Connection con = null;
@@ -167,9 +170,9 @@ public class UserDaoImp implements IUserDao {
         Connection con = null;
         try {
             con = createConnection();
-            String sql = "SELECT * FROM usuari where usuari.\"USERNAME\"= ? ";
+            String sql = "SELECT * FROM usuari where ID= ? ";
             ps = con.prepareStatement(sql);
-            ps.setString(1, ((User) user).getUserName());
+            ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
             rs.next();
             String pass = rs.getString(Config.ATTR_USER_PASSWORD);
@@ -180,10 +183,83 @@ public class UserDaoImp implements IUserDao {
             else{
                 out.println("Contraseña incorrecta");
             }
+            return exists;
         } catch (Exception ex) {
             throw new DaoException(ex.getMessage());
-        }
-        return exists;
+        }finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        }  
+    }
+    
+    @Override
+    public boolean updateEmail(User user, String newEmail) throws DaoException{
+       
+        boolean updated = false;
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {  
+            con = createConnection();
+            String sql = "UPDATE USUARI SET EMAIL = ? WHERE ID=?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,newEmail);
+            ps.setInt(2, user.getId());
+            ps.executeUpdate();
+            updated = true;
+            return updated;
+        } catch (Exception ex) {
+            throw new DaoException(ex.getMessage());
+        }finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        }  
+    } 
+    
+    @Override
+    public boolean isUsernameRepeat(User user) throws DaoException{
+        boolean isRepeat = false;
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {
+            con = createConnection();
+            String sql = "SELECT USERNAME FROM USUARI WHERE USERNAME = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,user.getUserName());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                isRepeat = true;
+            }
+            return isRepeat;
+        } catch (Exception ex) {
+            throw new DaoException(ex.getMessage());
+        }finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        } 
+    }
+    
+    @Override
+    public boolean updateName(User user)throws DaoException{
+        boolean isUpdated = false;
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {
+            con = createConnection();
+            String sql = "UPDATE USUARI SET FIRSTNAME =? , LASTNAME = ? WHERE ID=?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setInt(3, user.getId());
+            ps.executeUpdate();
+            isUpdated = true;
+            return isUpdated; 
+        } catch (Exception ex) {
+            throw new DaoException(ex.getMessage());
+        }finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        } 
+         
     }
 
     private Connection createConnection() throws Exception {

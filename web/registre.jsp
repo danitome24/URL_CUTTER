@@ -53,17 +53,18 @@
                             <label for="pwd"> Confirma la contrasenya:</label>
                             <input required="" name="password2" type="password" class="form-control" id="pwd2" placeholder="Contrasenya">
                         </div>
-                        <%
-                          
-                          if(request.getAttribute("pass") != null) {  
-                        %>
+                        <%if(request.getAttribute("pass") != null) {  %>
                          <div class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
                             <strong>ERROR!</strong> Contrasenya no coincideix.
                         </div>
-                        <%
-                          }
-                        %>
+                        <%}%>
+                        <%if(request.getAttribute("user") != null) { %>
+                         <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>ERROR!</strong> Nom de usuari erroni, prova amb un altre.
+                        </div>
+                        <% } %>
                         <button type="submit" class="btn btn-info col-md-4 col-md-offset-7">Submit</button>
                     </form>
                 </div>

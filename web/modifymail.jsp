@@ -24,18 +24,16 @@
         <div class="row" >
             <div class="col-md-6 col-md-offset-3  colored border-radius">
                 <h2>Canvia el teu mail</h2>
-
-                <table id="tmodify">
-                    <tbody>
-                    <form role="form" method="post" action="" >
+                <form role="form" method="post" action="modifyMail.do" >
+                    <table id="tmodify">
+                        <input type="hidden" name="form_action" value="changeMail" />
                         <tr>
                             <td class="camp">Nou mail: </td>
-                            <td class="active"> <input required="" name="" type="text" class="form-control" id="" placeholder=""> </td>
-                            <td class="success"> <a href="#" class="btn btn-info col-md-offset-4 col-md-9">Modifica</a> </td>
+                            <td class="active"> <input required="" name="emailModify" type="text" class="form-control" id="" placeholder="email"> </td>
+                            <td class="success">  <button type="submit" class="btn btn-info col-md-offset-2">Modifica</button> </td>
                         </tr>
-                    </form>        
-                    </tbody>
-                </table>
+                    </table>
+                </form>        
             </div>
         </div>   
     </body>
