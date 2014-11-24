@@ -18,12 +18,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author danie_000
  */
 public class FormCommand implements Command {
+
+    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
+    private Pattern pattern;
+    private Matcher matcher;
 
     @Override
     public void execute(HttpServletRequest request,
@@ -41,33 +47,50 @@ public class FormCommand implements Command {
 
             boolean isRepeat = userDAO.isUsernameRepeat(usuari);
             if (!isRepeat) {
-                if (request.getParameter("password1").equals(request.getParameter("password2"))) {
-                    inserit = userDAO.add(usuari);
-                    if (inserit) {
-                        out.println("Nuevo usuario insertado en la BD");
-                        HttpSession userSession = request.getSession(true);
-                        Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
-                        loginCookie.setMaxAge(30 * 60); //expire in 30 min
-                        response.addCookie(loginCookie);
-                        User id = userDAO.findUserByName(usuari);
-                        usuari.setId(id.getId());
-                        userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
+                boolean passwordIsValid = validatePassword(request.getParameter("password1"));
+                if (passwordIsValid) {
+                    if (request.getParameter("password1").equals(request.getParameter("password2"))) {
+                        inserit = userDAO.add(usuari);
+                        if (inserit) {
+                            out.println("Nuevo usuario insertado en la BD");
+                            HttpSession userSession = request.getSession(true);
+                            Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
+                            loginCookie.setMaxAge(30 * 60); //expire in 30 min
+                            response.addCookie(loginCookie);
+                            User id = userDAO.findUserByName(usuari);
+                            usuari.setId(id.getId());
+                            userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
+                        }
+                        ServletContext context = request.getSession().getServletContext();
+                        context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
+                    } else {
+                        request.setAttribute("passwor", "Les dues contrasenyes son diferentes");
+                        ServletContext context = request.getSession().getServletContext();
+                        context.getRequestDispatcher("/registre.jsp").forward(request, response);
                     }
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
                 } else {
-                    request.setAttribute("pass", "pass diferentes");
+                    request.setAttribute("password", "La contrasenya no compleix amb els requeriments");
                     ServletContext context = request.getSession().getServletContext();
                     context.getRequestDispatcher("/registre.jsp").forward(request, response);
                 }
             } else {
-                request.setAttribute("user", "Ya existe un usuario con este nombre");
+
+                request.setAttribute("user", "Ja existeix un usuari amb aquest nom d'user");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/registre.jsp").forward(request, response);
             }
+
         } catch (DaoException ex) {
             ex.printStackTrace();
         }
+
+    }
+
+    private boolean validatePassword(String password) {
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+        return matcher.matches();
 
     }
 }

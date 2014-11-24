@@ -24,7 +24,7 @@
             <div class="row" style="margin-top:10%">
                 <div class="col-md-6 col-md-offset-3  colored border-radius">
                     <h1>Registre</h1>
-                    
+
                     <form role="form" method="post" action="registre.do" id="myForm" onsubmit="return checkForm(this);">
                         <input type="hidden" name="form_action" value="form" />
                         <div class="form-group col-md-6 has-success">
@@ -39,32 +39,33 @@
                             <label for="secondname"> Cognoms:</label>
                             <input required="" name="lastname" type="text" class="form-control" id="lastNameForm" placeholder="Cognoms">
                         </div>
-                        <div class="form-group col-md-6 has-success">
-                            <label for="pwd">Contrasenya:    <span class="glyphicon glyphicon-question-sign"></span></label>
+                        <div class="form-group col-md-6 has-success" >
+                            <label for="pwd">Contrasenya:    <span class="glyphicon glyphicon-question-sign"> </span></label>
+                            <p class="hidden" id="messagePass">ERES UN PELELEEEE</p>
                             <input required="" name="password1" type="password" class="form-control" id="pwd1" placeholder="Contrasenya">
-                            
+
                         </div>
                         <div class="form-group col-md-6 has-success">
                             <label for="email">E-mail:</label>
                             <input required="" name="email" type="email" class="form-control" id="emailForm" placeholder="Email">
                         </div>
-                        
+
                         <div class="form-group col-md-6 has-success">
                             <label for="pwd"> Confirma la contrasenya:</label>
                             <input required="" name="password2" type="password" class="form-control" id="pwd2" placeholder="Contrasenya">
                         </div>
-                        <%if(request.getAttribute("pass") != null) {  %>
-                         <div class="alert alert-danger">
+                        <%if (request.getAttribute("user") != null) {%>
+                        <div class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> Contrasenya no coincideix.
-                        </div>
-                        <%}%>
-                        <%if(request.getAttribute("user") != null) { %>
-                         <div class="alert alert-danger">
-                            <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> Nom de usuari erroni, prova amb un altre.
+                            <strong>ERROR!</strong> <%=request.getAttribute("user")%>
                         </div>
                         <% } %>
+                        <%if (request.getAttribute("password") != null) {%>
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>ERROR!</strong> <%=request.getAttribute("password")%>
+                        </div>
+                        <% }%>
                         <button type="submit" class="btn btn-info col-md-4 col-md-offset-7" >Submit</button>
                     </form>
                 </div>
