@@ -47,8 +47,9 @@ public class ForgetPassCommand implements Command {
             out.println("ID USER:" + idUser);
             if (idUser.getId() == -1) {
                 out.println("NO EXISTE UN USER CON ESTE EMAIL");
+                request.setAttribute("emailError", "No coincideix amb ningú el correu");
                 ServletContext context = request.getSession().getServletContext();
-                context.getRequestDispatcher("/login.jsp").forward(request, response);
+                context.getRequestDispatcher("/rememberPass.jsp").forward(request, response);
             } else {
                 randomPass = generateRandomString();
                 boolean introduit = resetNewPassword(randomPass, idUser.getId());
@@ -70,6 +71,9 @@ public class ForgetPassCommand implements Command {
                         msg.setText(msgBody);
                         Transport.send(msg);
                         out.println("Sending the email....");
+                        request.setAttribute("emailSent", "El email ha sigut enviat");
+                        ServletContext context = request.getSession().getServletContext();
+                        context.getRequestDispatcher("/rememberPass.jsp").forward(request, response);
                     } catch (MessagingException mex) {
                         mex.printStackTrace();
                     }

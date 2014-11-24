@@ -113,11 +113,13 @@ public class UserDaoImp implements IUserDao {
         int idUser = -1;
         try {
             con = createConnection();
-            String sql = "SELECT ID FROM USUARI WHERE EMAIL='" + email + "'";
+            String sql = "SELECT ID FROM USUARI WHERE EMAIL= ?";
             ps = con.prepareStatement(sql);
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            idUser = Integer.parseInt(rs.getString(Config.ATTR_USER_ID));
+            if(rs.next()){
+                idUser = rs.getInt(Config.ATTR_USER_ID);
+            }
             userReturn.setId(idUser);
             return userReturn;
         } catch (Exception e) {
