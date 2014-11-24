@@ -37,13 +37,6 @@
                             </tr>
 
                             <tr>
-                                <td class="camp">Nom user: </td>
-                                <td class="active"> <%= user.getUserName()%> </td>
-                                <td class="success"> <a href="modifyuser.jsp" class="btn btn-info col-md-offset-7 ">Modifica</a> </td>
-                            </tr>
-
-
-                            <tr>
                                 <td class="camp">Password: </td>
                                 <td class="active"> ***** </td>
                                 <td class="success"> <a href="modifypw.jsp" class="btn btn-info col-md-offset-7">Modifica</a> </td>                              

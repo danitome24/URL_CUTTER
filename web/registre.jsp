@@ -25,7 +25,7 @@
                 <div class="col-md-6 col-md-offset-3  colored border-radius">
                     <h1>Registre</h1>
                     
-                    <form role="form" method="post" action="registre.do" id="myForm">
+                    <form role="form" method="post" action="registre.do" id="myForm" onsubmit="return checkForm(this);">
                         <input type="hidden" name="form_action" value="form" />
                         <div class="form-group col-md-6 has-success">
                             <label for="name"> Nom:</label>
@@ -65,7 +65,7 @@
                             <strong>ERROR!</strong> Nom de usuari erroni, prova amb un altre.
                         </div>
                         <% } %>
-                        <button type="submit" class="btn btn-info col-md-4 col-md-offset-7">Submit</button>
+                        <button type="submit" class="btn btn-info col-md-4 col-md-offset-7" >Submit</button>
                     </form>
                 </div>
             </div>

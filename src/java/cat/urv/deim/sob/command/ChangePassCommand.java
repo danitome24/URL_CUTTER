@@ -41,6 +41,8 @@ public class ChangePassCommand implements Command {
                         userDAO.updatePassword(newPass1, userLogin.getId());
                         request.setAttribute("passUpdated", "El password ha sido actualizado correctamente");
                         out.println("Password cambiada");
+                        userLogin.setPassword(newPass1);
+                        userSession.setAttribute(Config.ATTR_SERVLET_USER, userLogin);
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
                     } else {
