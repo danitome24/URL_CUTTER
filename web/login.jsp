@@ -66,7 +66,7 @@
                             </div>                          
                         </div>
                         <%
-                            if (null != userSession.getAttribute("errorLogin")) {%>
+                            if (null != request.getAttribute("errorLogin")) {%>
                         <div class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
                             <strong>ERROR!</strong> Usuari o contrasenya incorrecte.

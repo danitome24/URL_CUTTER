@@ -10,6 +10,6 @@ function check_values() {
     }
 
 }
-function showText(){
-    
-}
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})

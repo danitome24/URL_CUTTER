@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <link href="css/style.css" rel="stylesheet">
         <link href="css/navbar.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery.js"></script>
@@ -40,8 +41,7 @@
                             <input required="" name="lastname" type="text" class="form-control" id="lastNameForm" placeholder="Cognoms">
                         </div>
                         <div class="form-group col-md-6 has-success" >
-                            <label for="pwd">Contrasenya:    <span class="glyphicon glyphicon-question-sign"> </span></label>
-                            <p class="hidden" id="messagePass">ERES UN PELELEEEE</p>
+                            <label for="pwd">Contrasenya:<span class="glyphicon glyphicon-question-sign" data-placement="right" title="Composta per: minúscules, majúscules, números i major de 6" data-toggle="tooltip"></span></label>       
                             <input required="" name="password1" type="password" class="form-control" id="pwd1" placeholder="Contrasenya">
 
                         </div>

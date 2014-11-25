@@ -31,7 +31,6 @@ public class LoginCommand implements Command {
         usuari.setUserName(request.getParameter(Config.ATTR_USER_USERNAME));
         usuari.setPassword(request.getParameter(Config.ATTR_USER_PASSWORD));
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
-        //userSession.setAttribute("errorLogin","");
         try {
             isValid = userDAO.login(usuari);
             if (isValid) {            
@@ -48,7 +47,7 @@ public class LoginCommand implements Command {
         if (isValid) {
             response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
         } else {
-            userSession.setAttribute("errorLogin","El usuario no se encuentra registrado");
+            request.setAttribute("errorLogin","El usuario no se encuentra registrado");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/login.jsp").forward(request, response);
         }

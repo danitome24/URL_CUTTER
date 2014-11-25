@@ -115,9 +115,6 @@ h1 {
     text-align: left;
 }
 
-
-
-
 #divurl {
     padding-top: 50px;
 }
@@ -157,4 +154,13 @@ h2 {
     border-spacing:  15px;
 }
 
+.tooltipPass {
+	position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px Arial;
+}
 

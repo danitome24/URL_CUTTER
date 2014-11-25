@@ -64,7 +64,7 @@ public class FormCommand implements Command {
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
                     } else {
-                        request.setAttribute("passwor", "Les dues contrasenyes son diferentes");
+                        request.setAttribute("password", "Les dues contrasenyes son diferentes");
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/registre.jsp").forward(request, response);
                     }
