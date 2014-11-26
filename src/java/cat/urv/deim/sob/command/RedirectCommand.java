@@ -14,6 +14,7 @@ import java.io.IOException;
 import static java.lang.System.out;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,10 @@ public class RedirectCommand implements Command {
             if (longUrl != null) {                
                 out.println("La url a redirigir es: "+longUrl);
                 response.sendRedirect(longUrl);
+            }else{
+                request.setAttribute("url", "La url : "+path+" no es troba al sistema");
+                ServletContext context = request.getSession().getServletContext();
+                context.getRequestDispatcher("/errorRedirect.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             Logger.getLogger(RedirectCommand.class.getName()).log(Level.SEVERE, null, ex);
