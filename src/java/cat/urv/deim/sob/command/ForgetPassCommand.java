@@ -66,7 +66,7 @@ public class ForgetPassCommand implements Command {
                     try {
                         Message msg = new MimeMessage(session);
                         msg.setFrom(new InternetAddress(Config.FROM_ADDRESS, "Administrator of URL cutter"));
-                        msg.addRecipient(Message.RecipientType.TO, new InternetAddress("daniel.tome@estudiants.urv.cat", "Mr. User"));
+                        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email, "Mr. User"));
                         msg.setSubject("New Password to your account");
                         msg.setText(msgBody);
                         Transport.send(msg);
