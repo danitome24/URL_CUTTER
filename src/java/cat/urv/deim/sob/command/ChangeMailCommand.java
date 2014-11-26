@@ -34,7 +34,7 @@ public class ChangeMailCommand implements Command{
         try {
             boolean isUpdated = userDAO.updateEmail(user, newEmail);
             if(isUpdated){
-                request.setAttribute("emailUpdated", "El correo ha sido actualizado correctamente");
+                request.setAttribute("emailUpdated", "El correu ha sigut actualitzat satisfactoriament");
                 user.setEmail(newEmail);
                 userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
                 ServletContext context = request.getSession().getServletContext();

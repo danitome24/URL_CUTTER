@@ -47,9 +47,9 @@ public class FormCommand implements Command {
 
             boolean isRepeat = userDAO.isUsernameRepeat(usuari);
             if (!isRepeat) {
-                boolean passwordIsValid = validatePassword(request.getParameter("password1"));
+                boolean passwordIsValid = validatePassword(request.getParameter("password"));
                 if (passwordIsValid) {
-                    if (request.getParameter("password1").equals(request.getParameter("password2"))) {
+                    if (request.getParameter("password").equals(request.getParameter("password2"))) {
                         inserit = userDAO.add(usuari);
                         if (inserit) {
                             out.println("Nuevo usuario insertado en la BD");

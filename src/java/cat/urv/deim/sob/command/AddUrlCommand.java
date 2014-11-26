@@ -62,7 +62,7 @@ public class AddUrlCommand implements Command {
                     out.println("YA EXISTE RELACION");
                 }
             }
-            request.setAttribute("insertUrl", "Url insertada");
+            request.setAttribute("insertUrl", "Url introduida!");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         } catch (DaoException ex) {

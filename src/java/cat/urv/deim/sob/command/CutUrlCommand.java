@@ -55,7 +55,7 @@ public class CutUrlCommand implements Command {
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         } else {
             out.println("URL MUY CORTA");
-            request.setAttribute("lengthUrl", "No tiene la suficiente longitud");
+            request.setAttribute("lengthUrl", "La url es massa curta");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         }

@@ -53,25 +53,25 @@
                     <%if (request.getAttribute("nameUpdated") != null) {%>
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>PERFECTE!</strong> Nom i cognom actualitzat!.
+                        <strong>PERFECTE!</strong> <%=request.getAttribute("nameUpdated") %>
                     </div>
                     <% } %>
                     <%if (request.getAttribute("emailUpdated") != null) {%>
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>PERFECTE!</strong> Correu actualitzat!.
+                        <strong>PERFECTE!</strong> <%=request.getAttribute("emailUpdated") %>
                     </div>
                     <% } %>
                     <%if (request.getAttribute("passUpdated") != null) {%>
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>PERFECTE!</strong> Contranseya actualitzada!.
+                        <strong>PERFECTE!</strong> <%=request.getAttribute("passUpdated") %>
                     </div>
                     <% } %>
                     <%if (request.getAttribute("error") != null) {%>
                     <div class="alert alert-danger">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>ERROR!</strong> Ha hagut algun error al modificar la informació!.
+                        <strong>ERROR!</strong> <%=request.getAttribute("error") %>
                     </div>
                     <% } %>
                 </div>

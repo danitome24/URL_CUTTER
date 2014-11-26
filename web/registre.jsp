@@ -42,7 +42,7 @@
                         </div>
                         <div class="form-group col-md-6 has-success" >
                             <label for="pwd">Contrasenya:<span class="glyphicon glyphicon-question-sign" data-placement="right" title="Composta per: minúscules, majúscules, números i major de 6" data-toggle="tooltip"></span></label>       
-                            <input required="" name="password1" type="password" class="form-control" id="pwd1" placeholder="Contrasenya">
+                            <input required="" name="password" type="password" class="form-control" id="pwd1" placeholder="Contrasenya">
 
                         </div>
                         <div class="form-group col-md-6 has-success">

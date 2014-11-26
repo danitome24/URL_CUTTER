@@ -80,7 +80,7 @@
                             %>
                             <div class="alert alert-danger">
                                 <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                <strong>ERROR!</strong> URL massa curta!.
+                                <strong>ERROR!</strong> <%=request.getAttribute("lengthUrl") %>.
                             </div>
                             <%
                                 }
@@ -90,7 +90,7 @@
                             %>
                             <div class="alert alert-success">
                                 <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                <strong>PERFECTE!</strong> URL introduida!.
+                                <strong>PERFECTE!</strong> <%=request.getAttribute("insertUrl") %>!.
                             </div>
                             <%
                                 }

@@ -77,8 +77,10 @@
                     %>
                     <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage - 1%>"> < </a></li>
                         <% } %>
-                        <% for (int i = 1; i <= numOfPages; i++) {%>                    
+                        <% for (int i = 1; i <= numOfPages; i++) {%> 
+                        <% if (numOfPages > 1) {%>
                     <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=i%>"i><%=i%></a></li>
+                        <% }%>
                         <% } %>
                         <%
                             if (currentPage + 1 <= numOfPages) {

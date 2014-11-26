@@ -39,12 +39,12 @@ public class ChangeNameCommand implements Command {
                 boolean isUpdated = userDAO.updateName(user);
                 if (isUpdated) {
                     out.println("se ha actualizado");
-                    request.setAttribute("nameUpdated", "El correo ha sido actualizado correctamente");
+                    request.setAttribute("nameUpdated", "El nom ha sigut actualitzat correctament");
                     userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
                     ServletContext context = request.getSession().getServletContext();
                     context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
                 }else{
-                    request.setAttribute("error", "Ha habido algun error al cambiar el nombre");
+                    request.setAttribute("error", "Hi ha hagut algun error");
                     ServletContext context = request.getSession().getServletContext();
                     context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
                 }

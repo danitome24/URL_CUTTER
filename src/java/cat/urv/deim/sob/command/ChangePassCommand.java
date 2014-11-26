@@ -39,21 +39,21 @@ public class ChangePassCommand implements Command {
             if (userLogin.getPassword().equals(oldPass)) {
                     if (newPass1.equals(newPass2)) {
                         userDAO.updatePassword(newPass1, userLogin.getId());
-                        request.setAttribute("passUpdated", "El password ha sido actualizado correctamente");
+                        request.setAttribute("passUpdated", "La contrasenya ha sigut actualitzada satisfactoriament");
                         out.println("Password cambiada");
                         userLogin.setPassword(newPass1);
                         userSession.setAttribute(Config.ATTR_SERVLET_USER, userLogin);
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("passError", "Error a la pass");
+                        request.setAttribute("passError", "La password no coincideix");
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
                     }
 
             } else {
                 out.println("La contraseña no coincide con la antigua");
-                request.setAttribute("errorOldPass", "La pass antigua no coincide");
+                request.setAttribute("errorOldPass", "La contrasenya antiga no es correcta");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
             }
