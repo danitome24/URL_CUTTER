@@ -52,7 +52,7 @@
                         <%if (request.getAttribute("passError") != null) {%>
                         <div class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> La contrasenya nova no coincideix!.
+                            <strong>ERROR!</strong> <%= request.getAttribute("passError")%>
                         </div>
                         <% }%>
                     </table>

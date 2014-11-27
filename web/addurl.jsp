@@ -95,6 +95,16 @@
                             <%
                                 }
                             %>
+                            <%
+                                if (request.getAttribute("repeatUrl") != null) {
+                            %>
+                            <div class="alert alert-warning">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>WARNING!</strong> <%=request.getAttribute("repeatUrl") %>!.
+                            </div>
+                            <%
+                                }
+                            %>
                             <div class="row">
                                 <div class="col-md-6">
                                     <table id ="tableurl">
@@ -105,12 +115,13 @@
                                             <td>
                                                 <button type="submit" class="btn btn-success">Confirmar</button>
                                             </td>
-                                            <%
-                                                }
-                                            %>
+                                            
                                             <td>
                                                 <a href="addurl.jsp" class="btn btn-danger btn-block">Cancelar</a>
                                             </td>
+                                            <%
+                                                }
+                                            %>
                                         </tr>
                                     </table>
                                 </div>
