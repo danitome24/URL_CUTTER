@@ -12,8 +12,8 @@ import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import java.io.IOException;
 import static java.lang.System.out;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +26,10 @@ import javax.servlet.http.HttpSession;
  */
 public class ChangePassCommand implements Command {
 
+    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
+    private Pattern pattern;
+    private Matcher matcher;
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String oldPass = (String) request.getParameter("oldPass");
@@ -37,7 +41,8 @@ public class ChangePassCommand implements Command {
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
             if (userLogin.getPassword().equals(oldPass)) {
-                    if (newPass1.equals(newPass2)) {
+                if (newPass1.equals(newPass2)) {
+                    if (validatePassword(newPass1)) {
                         userDAO.updatePassword(newPass1, userLogin.getId());
                         request.setAttribute("passUpdated", "La contrasenya ha sigut actualitzada satisfactoriament");
                         out.println("Password cambiada");
@@ -46,10 +51,15 @@ public class ChangePassCommand implements Command {
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("passError", "La password no coincideix");
+                        request.setAttribute("passError", "La password no compleix els requisits");
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
                     }
+                } else {
+                    request.setAttribute("passError", "La password no coincideix");
+                    ServletContext context = request.getSession().getServletContext();
+                    context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
+                }
 
             } else {
                 out.println("La contraseña no coincide con la antigua");
@@ -60,6 +70,14 @@ public class ChangePassCommand implements Command {
         } catch (DaoException ex) {
             ex.toString();
         }
+    }
+
+    private boolean validatePassword(String password) {
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+        return matcher.matches();
+
     }
 
 }

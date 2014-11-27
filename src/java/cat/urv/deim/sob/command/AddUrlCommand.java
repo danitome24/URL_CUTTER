@@ -13,10 +13,6 @@ import cat.urv.deim.sob.model.UrlDaoFactory;
 import cat.urv.deim.sob.model.User;
 import java.io.IOException;
 import static java.lang.System.out;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,11 +31,11 @@ public class AddUrlCommand implements Command {
         out.println("ADD URL COMMAND");
         String urlName = null;
         HttpSession userSession = request.getSession(false);
-        User user = (User)userSession.getAttribute(Config.ATTR_SERVLET_USER);
+        User user = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
         Url urlFind = new Url();
         url.setUrl(request.getParameter("url"));
         url.setUrlShort(request.getParameter("urlShort"));
-        out.println("URL SHORT: "+url.getUrlShort());
+        out.println("URL SHORT: " + url.getUrlShort());
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
             boolean insert = false;
@@ -60,6 +56,9 @@ public class AddUrlCommand implements Command {
                     out.println("Insert en la relacion hecha");
                 } else {
                     out.println("YA EXISTE RELACION");
+                    request.setAttribute("repeatUrl", "Ja tens aquesta url introduida");
+                    ServletContext context = request.getSession().getServletContext();
+                    context.getRequestDispatcher("/addurl.jsp").forward(request, response);
                 }
             }
             request.setAttribute("insertUrl", "Url introduida!");
