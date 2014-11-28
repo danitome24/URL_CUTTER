@@ -29,20 +29,20 @@ public class ShowUrlCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int page = 0;
 
-        out.println("Show Url Command");
+        
         page = Integer.parseInt(request.getParameter("page"));
-        out.println("Pagina: "+page);
+        
         HttpSession userSession = request.getSession(true);
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         User user = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
-        out.println("ID usuario: "+user.getId());
+        
         try {
             Collection allUrl = urlDao.showUrl(user.getId(),page);
             userSession.setAttribute(Config.ATTR_URL_NAME, allUrl);
             float numOfRow = urlDao.getNumberOfRow();
             float division = numOfRow / Config.NUM_OF_ROWS_PER_PAGE;
             int numOfPages = (int)Math.ceil(division);
-            out.println("Nmber of pages: "+numOfPages);
+            
 
             userSession.setAttribute("numPage", numOfPages);
             ServletContext context = request.getSession().getServletContext();

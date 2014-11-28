@@ -36,8 +36,8 @@
                 <table class="table table-striped">
                     <tr>
                         <th>URL</th>
-                        <th>Url curta</th>
-                        <th>Numero de visites</th>
+                        <th>Short URL</th>
+                        <th>Number of visits</th>
                     </tr>
                     <%  UrlDaoImp urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
 

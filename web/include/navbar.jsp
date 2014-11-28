@@ -12,14 +12,14 @@
         <div class="dropdown navbar-brand" id="dropurl">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="menuurl">Manage </a>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="addurl.jsp">Afegeix URL</a></li>
+                <li><a href="addurl.jsp">Add URL</a></li>
                 <li class="divider"></li>
-                <li><a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1">Llista URL</a></li>
+                <li class="disabled"><a href="" >Delete URL</a></li>
             </ul>
         </div>
         <div class="nav navbar-nav navbar-brand" id="menulogin">
             <li class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="loginDrop">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="logindrop">
 
                     
                     <span class="glyphicon glyphicon-user"></span> 
@@ -43,7 +43,7 @@
                                     <p class="text-left"><strong><%=userFirstName%></strong></p>
                                     <p class="text-left small"><%= currentUser.getEmail() %></p>
                                     <p class="text-left">
-                                        <a href="modifydata.jsp" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
+                                        <a href="modifydata.jsp" class="btn btn-primary btn-block btn-sm">Modify Account</a>
                                     </p>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <p>
-                                        <a href="http://localhost:8080/SOB/logout.do?form_action=logout" class="btn btn-danger btn-block">Cerrar Sesion</a>
+                                        <a href="http://localhost:8080/SOB/logout.do?form_action=logout" class="btn btn-danger btn-block">Sign Out</a>
                                     </p>
                                 </div>
                             </div>

@@ -28,40 +28,33 @@ public class AddUrlCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Url url = new Url();
-        out.println("ADD URL COMMAND");
+
         String urlName = null;
         HttpSession userSession = request.getSession(false);
         User user = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
         Url urlFind = new Url();
         url.setUrl(request.getParameter("url"));
         url.setUrlShort(request.getParameter("urlShort"));
-        out.println("URL SHORT: " + url.getUrlShort());
+        boolean exists = false;
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
             boolean insert = false;
             urlFind = urlDao.findByUrlShort(url);
             url.setIdUrl(urlFind.getIdUrl());
             if (urlFind.getUrlShort() == null) {
-                out.println("No hay URL igual en la base de datos");
                 insert = urlDao.addUrl(url, user.getId());
-                if (insert) {
-                    out.println("Se ha insertado la nueva URL");
-                } else {
-                    out.println("NO SE HA PODIDO INSERTAR LA URL");
-                }
+
             } else {
-                boolean exists = urlDao.findRelationByUrl(url.getIdUrl(), user.getId());
+                exists = urlDao.findRelationByUrl(url.getIdUrl(), user.getId());
                 if (!exists) {
                     urlDao.insertRelation(url.getIdUrl(), user.getId());
-                    out.println("Insert en la relacion hecha");
-                } else {
-                    out.println("YA EXISTE RELACION");
-                    request.setAttribute("repeatUrl", "Ja tens aquesta url introduida");
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/addurl.jsp").forward(request, response);
-                }
+                } 
             }
+            if(exists){
+                request.setAttribute("repeatUrl", "This url is already inserted");
+            }else{
             request.setAttribute("insertUrl", "Url introduida!");
+            }
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         } catch (DaoException ex) {

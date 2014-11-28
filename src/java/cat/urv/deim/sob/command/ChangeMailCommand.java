@@ -26,7 +26,7 @@ public class ChangeMailCommand implements Command{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        out.println("Change Mail Command");
+        
         String newEmail = (String)request.getParameter("emailModify");
         HttpSession userSession = request.getSession(true);
         User user = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
@@ -34,7 +34,7 @@ public class ChangeMailCommand implements Command{
         try {
             boolean isUpdated = userDAO.updateEmail(user, newEmail);
             if(isUpdated){
-                request.setAttribute("emailUpdated", "El correu ha sigut actualitzat satisfactoriament");
+                request.setAttribute("emailUpdated", "The e-mail has been modified");
                 user.setEmail(newEmail);
                 userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
                 ServletContext context = request.getSession().getServletContext();

@@ -23,18 +23,18 @@
         <%@ include file="/include/navbar.jsp" %>
         <div class="row" >
             <div class="col-md-6 col-md-offset-3  colored border-radius">
-                <h2>Canvia el teu nom</h2>
+                <h2>Change Your Name</h2>
                 <form role="form" method="post" action="changename.do" >
                     <input type="hidden" name="form_action" value="changeName" />
                     <table id="tmodify">
                         <tr>
-                            <td class="camp">Nou nom: </td>
+                            <td class="camp">Name: </td>
                             <td class="active"><input required="" name="firstname" type="text" class="form-control" id=""> </td>            
                         </tr>
                         <tr>
-                            <td class="camp">Nou cognoms: </td>
+                            <td class="camp">Last Name: </td>
                             <td class="active"><input required="" name="lastname" type="text" class="form-control" id="" > </td>
-                            <td class="success"><button type="submit" class="btn btn-info col-md-offset-2">Modifica</button></td>
+                            <td class="success"><button type="submit" class="btn btn-info col-md-offset-2">Submit</button></td>
                         </tr>
                     </table>
                 </form>        

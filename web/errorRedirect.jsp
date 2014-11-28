@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>ERROR GREU!!!!!</h1>
+        <h1>FATAL ERROR!!!!!</h1>
         <% String error = (String)request.getAttribute("url"); %>
         <h3><%=error%></h3>
     </body>

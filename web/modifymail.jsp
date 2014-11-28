@@ -23,14 +23,14 @@
         <%@ include file="/include/navbar.jsp" %>
         <div class="row" >
             <div class="col-md-6 col-md-offset-3  colored border-radius">
-                <h2>Canvia el teu mail</h2>
+                <h2>Change Your E-Mail</h2>
                 <form role="form" method="post" action="modifyMail.do" >
                     <table id="tmodify">
                         <input type="hidden" name="form_action" value="changeMail" />
                         <tr>
-                            <td class="camp">Nou mail: </td>
+                            <td class="camp">E-Mail: </td>
                             <td class="active"> <input required="" name="emailModify" type="text" class="form-control" id="" placeholder="email"> </td>
-                            <td class="success">  <button type="submit" class="btn btn-info col-md-offset-2">Modifica</button> </td>
+                            <td class="success">  <button type="submit" class="btn btn-info col-md-offset-2">Submit</button> </td>
                         </tr>
                     </table>
                 </form>        

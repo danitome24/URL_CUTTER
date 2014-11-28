@@ -24,35 +24,35 @@
         <div class="container" >
             <div class="row" style="margin-top:10%">
                 <div class="col-md-6 col-md-offset-3  colored border-radius">
-                    <h1>Registre</h1>
+                    <h1>Register</h1>
 
                     <form role="form" method="post" action="registre.do" id="myForm" onsubmit="return checkForm(this);">
                         <input type="hidden" name="form_action" value="form" />
                         <div class="form-group col-md-6 has-success">
-                            <label for="name"> Nom:</label>
-                            <input required="" name="firstname" type="text" class="form-control" id="firstNameForm" placeholder="Nom">
+                            <label for="name"> Name:</label>
+                            <input required="" name="firstname" type="text" class="form-control" id="firstNameForm" >
                         </div>
                         <div class="form-group col-md-6 has-success">
-                            <label for="nomusuari">Nom usuari:</label>
-                            <input required="" name="username" type="text" class="form-control" id="nomUsuariForm" placeholder="Nom Usuari">
+                            <label for="nomusuari">User Name:</label>
+                            <input required="" name="username" type="text" class="form-control" id="nomUsuariForm" >
                         </div>
                         <div class="form-group col-md-6 has-success">
-                            <label for="secondname"> Cognoms:</label>
-                            <input required="" name="lastname" type="text" class="form-control" id="lastNameForm" placeholder="Cognoms">
+                            <label for="secondname"> Last Name:</label>
+                            <input required="" name="lastname" type="text" class="form-control" id="lastNameForm" >
                         </div>
                         <div class="form-group col-md-6 has-success" >
-                            <label for="pwd">Contrasenya:<span class="glyphicon glyphicon-question-sign" data-placement="right" title="Composta per: minúscules, majúscules, números i major de 6" data-toggle="tooltip"></span></label>       
-                            <input required="" name="password" type="password" class="form-control" id="pwd1" placeholder="Contrasenya">
+                            <label for="pwd">Password:<span class="glyphicon glyphicon-question-sign" data-placement="right" title="Composta per: minúscules, majúscules, números i major de 6" data-toggle="tooltip"></span></label>       
+                            <input required="" name="password" type="password" class="form-control" id="pwd1" >
 
                         </div>
                         <div class="form-group col-md-6 has-success">
                             <label for="email">E-mail:</label>
-                            <input required="" name="email" type="email" class="form-control" id="emailForm" placeholder="Email">
+                            <input required="" name="email" type="email" class="form-control" id="emailForm" >
                         </div>
 
                         <div class="form-group col-md-6 has-success">
-                            <label for="pwd"> Confirma la contrasenya:</label>
-                            <input required="" name="password2" type="password" class="form-control" id="pwd2" placeholder="Contrasenya">
+                            <label for="pwd"> Confirm Password:</label>
+                            <input required="" name="password2" type="password" class="form-control" id="pwd2" >
                         </div>
                         <%if (request.getAttribute("user") != null) {%>
                         <div class="alert alert-danger">

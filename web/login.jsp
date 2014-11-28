@@ -50,8 +50,8 @@
         <div class="container">
             <div class="row" >
                 <div class="col-md-4 col-md-offset-4  colored border-login">
-                    <h1>Escurçador d'URL</h1>
-                    <form class="form-horizontal" role="form" method="post" action="login.do">
+                    <h1>URL Cutter</h1>
+                    <form class="form-horizontal" role="form" method="post" action="login.do" id="loginform">
                         <input type="hidden" name="form_action" value="login" />
                         <div class="form-group" id="positionLogin">
                             <div class="col-sm-10">
@@ -62,7 +62,7 @@
                         <div class="form-group"  id="positionLogin">
                             <div class="col-sm-10">
                                 <input required="" type="password" name="password" class="form-control" id="password" onblur="check_values()" onkeydown="check_values()" placeholder="Password">
-                                <a class="col-md-12" href="rememberPass.jsp">Recordar contrasenya</a>
+                                <a class="col-md-12" href="rememberPass.jsp">Remember Password</a>
                             </div>                          
                         </div>
                         <%
@@ -80,7 +80,7 @@
                                 <span id="lockSubmit" class="glyphicon glyphicon-lock medhidden redborder"></span>
                             </div>
                         </div>
-                        <a href="registre.jsp" class="btn btn-info col-md-offset-7 col-md-3">Registra't</a>
+                        <a href="registre.jsp" class="btn btn-info col-md-offset-7 col-md-3">Register</a>
                     </form>
                 </div>
             </div>

@@ -44,10 +44,10 @@ public class ForgetPassCommand implements Command {
         User idUser;
         try {
             idUser = userDao.findUserByEmail(email);
-            out.println("ID USER:" + idUser);
+            
             if (idUser.getId() == -1) {
-                out.println("NO EXISTE UN USER CON ESTE EMAIL");
-                request.setAttribute("emailError", "No coincideix amb ningú el correu");
+                
+                request.setAttribute("emailError", "This e-amail is not in the system");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/rememberPass.jsp").forward(request, response);
             } else {
@@ -70,8 +70,8 @@ public class ForgetPassCommand implements Command {
                         msg.setSubject("New Password to your account");
                         msg.setText(msgBody);
                         Transport.send(msg);
-                        out.println("Sending the email....");
-                        request.setAttribute("emailSent", "El email ha sigut enviat");
+                        
+                        request.setAttribute("emailSent", "The e-mail has been sent");
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/rememberPass.jsp").forward(request, response);
                     } catch (MessagingException mex) {

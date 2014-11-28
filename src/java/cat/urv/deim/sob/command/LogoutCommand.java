@@ -26,7 +26,7 @@ public class LogoutCommand implements Command {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        out.println("El usuario ha salido de la aplicación correctamente");
+        
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {

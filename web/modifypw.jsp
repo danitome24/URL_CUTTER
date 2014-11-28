@@ -24,29 +24,29 @@
 
         <div class="row" >
             <div class="col-md-5 col-md-offset-3  colored border-radius">
-                <h2>Canvia la teva password</h2>
+                <h2>Change Your Password</h2>
                 <form role="form" method="post" action="changePass.do" >
                     <input type="hidden" name="form_action" value="changePass" />
 
                     <table id="tmodify">
                         <tr>
-                            <td class="camp">Anterior password: </td>
+                            <td class="camp">Old Password: </td>
                             <td class="active"> <input required="" name="oldPass" type="password" class="form-control" id="" placeholder=""> </td>
                         </tr>
                         <tr>
-                            <td class="camp">Nou password: </td>
+                            <td class="camp">New Password: </td>
                             <td class="active"> <input required="" name="newPass1" type="password" class="form-control" id="" placeholder=""> </td>
                         </tr>
                         <tr>
-                            <td class="camp">Repeteix nou password: </td>
+                            <td class="camp">Repeat New Password: </td>
                             <td class="active"> <input required="" name="newPass2" type="password" class="form-control" id="" placeholder=""> </td>
-                            <td class="success"> <button type="submit" class="btn btn-info col-md-offset-2">Modifica</button> </td>
+                            <td class="success"> <button type="submit" class="btn btn-info col-md-offset-2">Submit</button> </td>
                         </tr>
 
                         <%if (request.getAttribute("errorOldPass") != null) {%>
                         <div class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> La contrasenya antiga es erronea!.
+                            <strong>ERROR!</strong> <%=request.getAttribute("errorOldPass")%>
                         </div>
                         <% }%>
                         <%if (request.getAttribute("passError") != null) {%>

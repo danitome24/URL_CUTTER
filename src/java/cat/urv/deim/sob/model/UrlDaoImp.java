@@ -46,12 +46,12 @@ public class UrlDaoImp implements IUrlDao {
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 url.setIdUrl(rs.getInt("ID_URL"));
-                out.println("URL INTRODUCIDA"+url.getIdUrl());         
-                out.println("Insertada en la tabla de URL");
+                
+                
                 insertRel = insertRelation(url.getIdUrl(),idUser);
-                out.println("Insertada en la tabla de Relacion");
+                
             }
-            out.println(insertRel && insert);
+            
             boolean isDone = insertRel && insert;
             return isDone;
         } catch (Exception ex) {
@@ -69,7 +69,7 @@ public class UrlDaoImp implements IUrlDao {
         PreparedStatement ps = null;
         Connection con = null;
         ResultSet rs = null;
-        out.println("Voy a buscar la siguente url corta: "+url.getUrlShort());
+        
         
         try {
             con = createConnection();
@@ -80,9 +80,9 @@ public class UrlDaoImp implements IUrlDao {
             if(rs.next()){
                 urlFind.setIdUrl(rs.getInt("ID_URL"));
                 urlFind.setUrlShort(rs.getString("URL_SHORT"));
-                out.println("HAY URL IGUAL");
+                
             } else{
-                out.println("NO HAY URL IGUAL");
+                
             }
              return urlFind;
         } catch (Exception ex) {
@@ -180,7 +180,7 @@ public class UrlDaoImp implements IUrlDao {
                 retornUrl.add(url);
             }
             
-            out.println("Nº of rows: "+this.numberOfRows);
+            
             return retornUrl;
 
         } catch (Exception ex) {

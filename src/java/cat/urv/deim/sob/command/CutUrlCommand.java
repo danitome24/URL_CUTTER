@@ -39,11 +39,11 @@ public class CutUrlCommand implements Command {
             try {
                 User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
                 userSession.setAttribute("lengthUrl", null);
-                out.println("ID_USER: " + idUser.getId());
+                
                 Url url = new Url();
                 url.setUrl(urlName);
                 String hashUrl = getHashUrl(url.getUrl());
-                out.println("El hash es: "+hashUrl);
+                
                 String urlShortAll = "http://localhost:8080/SOB/url/" + hashUrl;
                 url.setUrlShort(urlShortAll);
                 request.setAttribute("urlCorta", urlShortAll);
@@ -54,8 +54,8 @@ public class CutUrlCommand implements Command {
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         } else {
-            out.println("URL MUY CORTA");
-            request.setAttribute("lengthUrl", "La url es massa curta");
+            
+            request.setAttribute("lengthUrl", "The url is too short");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         }

@@ -27,9 +27,9 @@
                     <table id="tmodify">
                         <input type="hidden" name="form_action" value="forget_pass" />
                         <tr>
-                            <td class="camp">Introdueix mail: </td>
+                            <td class="camp">Insert e-mail: </td>
                             <td class="active"> <input required="" name="email" type="email" class="form-control" id="" placeholder=""> </td>
-                            <td class="success"> <button type="submit" class="btn btn-info col-md-offset-4 col-md-9">Envia</button> </td>
+                            <td class="success"> <button type="submit" class="btn btn-info col-md-offset-4 col-md-9">Submit</button> </td>
                         </tr>
                     </table>
                 </form>        

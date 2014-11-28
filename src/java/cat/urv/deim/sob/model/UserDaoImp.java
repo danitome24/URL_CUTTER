@@ -109,7 +109,7 @@ public class UserDaoImp implements IUserDao {
         Connection con = null;
         String userDb;
         User userReturn = new User();
-        out.println("EMAIL" + email);
+        
         int idUser = -1;
         try {
             con = createConnection();
@@ -148,10 +148,10 @@ public class UserDaoImp implements IUserDao {
             try {
                 userDb = rs.getString(Config.ATTR_USER_USERNAME);
                 passDb = rs.getString(Config.ATTR_USER_PASSWORD);
-                out.println(rs.getString(Config.ATTR_USER_USERNAME));
-                out.println(rs.getString(Config.ATTR_USER_PASSWORD));
+                
+                
             } catch (Exception e) {
-                out.println("No hay usuario igual");
+                
             }
 
             if ((u.getUserName().equals(userDb)) && (u.getPassword().equals(passDb))) {
@@ -180,10 +180,10 @@ public class UserDaoImp implements IUserDao {
             String pass = rs.getString(Config.ATTR_USER_PASSWORD);
             if (user.getPassword().equals(pass)){
                 exists = true;
-                out.println("Contraseña correcta");
+                
             }
             else{
-                out.println("Contraseña incorrecta");
+                
             }
             return exists;
         } catch (Exception ex) {

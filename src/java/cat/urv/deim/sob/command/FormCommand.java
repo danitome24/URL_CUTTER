@@ -52,7 +52,7 @@ public class FormCommand implements Command {
                     if (request.getParameter("password").equals(request.getParameter("password2"))) {
                         inserit = userDAO.add(usuari);
                         if (inserit) {
-                            out.println("Nuevo usuario insertado en la BD");
+                            
                             HttpSession userSession = request.getSession(true);
                             Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
                             loginCookie.setMaxAge(30 * 60); //expire in 30 min
@@ -64,18 +64,18 @@ public class FormCommand implements Command {
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
                     } else {
-                        request.setAttribute("password", "Les dues contrasenyes son diferentes");
+                        request.setAttribute("password", "The two passwords are different");
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/registre.jsp").forward(request, response);
                     }
                 } else {
-                    request.setAttribute("password", "La contrasenya no compleix amb els requeriments");
+                    request.setAttribute("password", "The password doesn't comply the requirements");
                     ServletContext context = request.getSession().getServletContext();
                     context.getRequestDispatcher("/registre.jsp").forward(request, response);
                 }
             } else {
 
-                request.setAttribute("user", "Ja existeix un usuari amb aquest nom d'user");
+                request.setAttribute("user", "This user is used");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/registre.jsp").forward(request, response);
             }

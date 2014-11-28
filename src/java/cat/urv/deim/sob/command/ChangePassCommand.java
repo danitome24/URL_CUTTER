@@ -35,7 +35,7 @@ public class ChangePassCommand implements Command {
         String oldPass = (String) request.getParameter("oldPass");
         String newPass1 = (String) request.getParameter("newPass1");
         String newPass2 = (String) request.getParameter("newPass2");
-        out.println("Old Pass: " + oldPass + " -NewPass1: " + newPass1 + " -NewPass2:" + newPass2);
+        
         HttpSession userSession = request.getSession(true);
         User userLogin = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
@@ -44,25 +44,25 @@ public class ChangePassCommand implements Command {
                 if (newPass1.equals(newPass2)) {
                     if (validatePassword(newPass1)) {
                         userDAO.updatePassword(newPass1, userLogin.getId());
-                        request.setAttribute("passUpdated", "La contrasenya ha sigut actualitzada satisfactoriament");
-                        out.println("Password cambiada");
+                        request.setAttribute("passUpdated", "The password has been modified");
+                        
                         userLogin.setPassword(newPass1);
                         userSession.setAttribute(Config.ATTR_SERVLET_USER, userLogin);
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("passError", "La password no compleix els requisits");
+                        request.setAttribute("passError", "The password doesn't comply the requirements");
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
                     }
                 } else {
-                    request.setAttribute("passError", "La password no coincideix");
+                    request.setAttribute("passError", "The password does not match");
                     ServletContext context = request.getSession().getServletContext();
                     context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
                 }
 
             } else {
-                out.println("La contraseña no coincide con la antigua");
+                
                 request.setAttribute("errorOldPass", "La contrasenya antiga no es correcta");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/modifypw.jsp").forward(request, response);

@@ -23,15 +23,15 @@
         <%@ include file="/include/navbar.jsp" %>
         <div class="row" >
             <div class="col-md-5 col-md-offset-3  colored border-radius">
-                <h2>Canvia el teu usuari</h2>
+                <h2>Modify Your User</h2>
 
                 <table id="tmodify">
                     <tbody>
                     <form role="form" method="post" action="" >
                         <tr>
-                            <td class="camp">Nou user: </td>
+                            <td class="camp">New User: </td>
                             <td class="active"> <input required="" name="" type="text" class="form-control" id="" placeholder=""> </td>
-                            <td class="success"> <a href="#" class="btn btn-info col-md-offset-4 col-md-9">Modifica</a> </td>
+                            <td class="success"> <a href="#" class="btn btn-info col-md-offset-4 col-md-9">Submit</a> </td>
                         </tr>
                     </form>        
                     </tbody>

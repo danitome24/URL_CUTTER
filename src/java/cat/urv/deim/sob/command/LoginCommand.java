@@ -47,7 +47,7 @@ public class LoginCommand implements Command {
         if (isValid) {
             response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
         } else {
-            request.setAttribute("errorLogin","El usuari no es correcte");
+            request.setAttribute("errorLogin","The user is not in the system");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/login.jsp").forward(request, response);
         }

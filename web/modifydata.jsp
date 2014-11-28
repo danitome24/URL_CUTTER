@@ -27,24 +27,24 @@
         <div class="container" >
             <div class="row" >
                 <div class="col-md-6 col-md-offset-3  colored border-radius">
-                    <h2>Modifica</h2>
+                    <h2>Modify Data</h2>
                     <table id="tmodify">
                         <tbody>
                             <tr>
-                                <td class="camp">Nom: </td>
+                                <td class="camp">Name: </td>
                                 <td class="active"> <%= user.getFirstName() + " " + user.getLastName()%> </td>
-                                <td class="success"> <a href="modifyname.jsp" class="btn btn-info col-md-offset-7">Modifica</a> </td>
+                                <td class="success"> <a href="modifyname.jsp" class="btn btn-info col-md-offset-7">Modify</a> </td>
                             </tr>
 
                             <tr>
                                 <td class="camp">Password: </td>
                                 <td class="active"> ***** </td>
-                                <td class="success"> <a href="modifypw.jsp" class="btn btn-info col-md-offset-7">Modifica</a> </td>                              
+                                <td class="success"> <a href="modifypw.jsp" class="btn btn-info col-md-offset-7">Modify</a> </td>                              
                             </tr>
                             <tr>
                                 <td class="camp">E-mail: </td>
                                 <td class="active"> <%= user.getEmail()%> </td>
-                                <td class="success"> <a href="modifymail.jsp" class="btn btn-info col-md-offset-7">Modifica</a> </td>                              
+                                <td class="success"> <a href="modifymail.jsp" class="btn btn-info col-md-offset-7">Modify</a> </td>                              
                             </tr>
 
 
@@ -53,19 +53,19 @@
                     <%if (request.getAttribute("nameUpdated") != null) {%>
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>PERFECTE!</strong> <%=request.getAttribute("nameUpdated") %>
+                        <strong>PERFECT!</strong> <%=request.getAttribute("nameUpdated") %>
                     </div>
                     <% } %>
                     <%if (request.getAttribute("emailUpdated") != null) {%>
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>PERFECTE!</strong> <%=request.getAttribute("emailUpdated") %>
+                        <strong>PERFECT!</strong> <%=request.getAttribute("emailUpdated") %>
                     </div>
                     <% } %>
                     <%if (request.getAttribute("passUpdated") != null) {%>
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>PERFECTE!</strong> <%=request.getAttribute("passUpdated") %>
+                        <strong>PERFECT!</strong> <%=request.getAttribute("passUpdated") %>
                     </div>
                     <% } %>
                     <%if (request.getAttribute("error") != null) {%>
