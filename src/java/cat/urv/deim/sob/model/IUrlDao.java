@@ -20,4 +20,5 @@ public interface IUrlDao {
     public boolean findRelationByUrl(int url,int user)throws DaoException;
     public int getNumberOfRow();
     public boolean insertRelation(int idUrl, int idUser)throws DaoException;
+    public boolean deleteUrl(int id, int idUser) throws DaoException;
 }

@@ -14,7 +14,7 @@
             <ul class="dropdown-menu" role="menu">
                 <li><a href="addurl.jsp">Add URL</a></li>
                 <li class="divider"></li>
-                <li class="disabled"><a href="" >Delete URL</a></li>
+                <li><a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1&delete=1" >Delete URL</a></li>
             </ul>
         </div>
         <div class="nav navbar-nav navbar-brand" id="menulogin">

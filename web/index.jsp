@@ -48,6 +48,7 @@
                         Iterator it = urlCol.iterator();
                         while (it.hasNext()) {
                             Url urlShow = (Url) it.next();
+                            int id = urlShow.getIdUrl();
                             String url = urlShow.getUrl();
                             String urlShort = urlShow.getUrlShort();
                             int nVisits = urlShow.getNumVisits();
@@ -62,6 +63,14 @@
                         <td>
                             <%= nVisits%>
                         </td>
+                        <% 
+                        if((Boolean)request.getAttribute("delete")!= null) { %>
+                        <td>                          
+                            <a class="btn btn-danger remove_fields" href="http://localhost:8080/SOB/deleteUrl.do?form_action=deleteUrl&id=<%=id%>">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>  
+                        </td>
+                        <% }%>
                     </tr>
                     <% }%>
                 </table>
