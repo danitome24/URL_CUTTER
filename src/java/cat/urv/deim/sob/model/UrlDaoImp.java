@@ -174,6 +174,7 @@ public class UrlDaoImp implements IUrlDao {
             
             while (rs.next()) {
                 Url url = new Url();
+                url.setIdUrl(rs.getInt("ID_URL"));
                 url.setUrl(rs.getString(Config.ATTR_URL_NAME));
                 url.setUrlShort(rs.getString("URL_SHORT"));
                 url.setNumVisits(rs.getInt(Config.ATTR_URL_NUMVISITS));               
@@ -189,7 +190,7 @@ public class UrlDaoImp implements IUrlDao {
         } finally {
             try {if (ps != null) {ps.close();}} catch (Exception ex) {}
             try {if (con != null) {con.close();}} catch (Exception ex) {}
-                }
+        }
 
     }
 
@@ -217,7 +218,7 @@ public class UrlDaoImp implements IUrlDao {
         } finally {
             try {if (ps != null) {ps.close();}} catch (Exception ex) {}
             try {if (con != null) {con.close();}} catch (Exception ex) {}
-                }
+        }
 
     }
 
@@ -238,6 +239,27 @@ public class UrlDaoImp implements IUrlDao {
     @Override
     public int getNumberOfRow(){
         return this.numberOfRows;
+    }
+    
+    @Override
+    public boolean deleteUrl(int id, int idUser) throws DaoException{
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {
+            con = createConnection();
+            String sql = "DELETE FROM URL_USER WHERE ID_URL = ? AND ID_USER = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setInt(2, idUser);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new DaoException(ex.getMessage());
+        } finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        }
     }
 
     private Connection createConnection() throws Exception {

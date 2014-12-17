@@ -29,20 +29,21 @@ public class ShowUrlCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int page = 0;
 
-        
         page = Integer.parseInt(request.getParameter("page"));
-        
+        if (request.getParameterMap().containsKey("delete") != false) {
+            out.println("Tiene delete");
+             request.setAttribute("delete", true);
+        }
         HttpSession userSession = request.getSession(true);
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         User user = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
-        
+
         try {
-            Collection allUrl = urlDao.showUrl(user.getId(),page);
+            Collection allUrl = urlDao.showUrl(user.getId(), page);
             userSession.setAttribute(Config.ATTR_URL_NAME, allUrl);
             float numOfRow = urlDao.getNumberOfRow();
             float division = numOfRow / Config.NUM_OF_ROWS_PER_PAGE;
-            int numOfPages = (int)Math.ceil(division);
-            
+            int numOfPages = (int) Math.ceil(division);
 
             userSession.setAttribute("numPage", numOfPages);
             ServletContext context = request.getSession().getServletContext();
