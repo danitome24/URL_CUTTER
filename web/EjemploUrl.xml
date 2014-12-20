@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UrlList>
+    <Url>
+        <idUrl>1</idUrl>
+        <Url>http://localhost:8080/lab9xml/saxdemo1.xml</Url>
+        <UrlShort>http://localhost:8080/SOB/url/5465</UrlShort>
+        <numVisitas>5</numVisitas>
+    </Url>
+</UrlList>
+

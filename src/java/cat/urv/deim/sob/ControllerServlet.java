@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class ControllerServlet extends HttpServlet {
 
     private Map commands = new HashMap();
+    private String xml;
 
     @Override
     public void init() {
