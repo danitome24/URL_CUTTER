@@ -116,9 +116,8 @@
                                         %>
 
                                         <td>
-                                            <a href="addurl.jsp" class="btn btn-danger btn-block" id="cancelurl">Cancel</a>
+                                            <a href="addurl.jsp" class="btn btn-danger" >Cancel</a>
                                         </td>
-
                                         <td>
                                             <button type="submit" class="btn btn-success" id="submiturl">Submit</button>
                                         </td>
