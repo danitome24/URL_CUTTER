@@ -261,6 +261,36 @@ public class UrlDaoImp implements IUrlDao {
             try {if (con != null) {con.close();}} catch (Exception ex) {}
         }
     }
+    @Override
+    public Collection fetchAllUrlFromUser(int idUser) throws DaoException{
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        Collection retornUrl = new LinkedList();
+        try {
+            con = createConnection();
+            String sql = "SELECT *\n" +
+                            "FROM URL U\n" +
+                            "LEFT JOIN URL_USER U2\n" +
+                            "ON U.ID_URL=U2.ID_URL\n" +
+                            "WHERE U2.ID_USER = ?\n";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idUser);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Url url = new Url(rs.getString(Config.ATTR_URL_NAME),rs.getInt("ID_URL"),rs.getString("URL_SHORT"),rs.getInt(Config.ATTR_URL_NUMVISITS));              
+                retornUrl.add(url);
+            }                  
+        return retornUrl;           
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new DaoException(ex.getMessage());
+        } finally {
+            try {if (ps != null) {ps.close();}} catch (Exception ex) {}
+            try {if (con != null) {con.close();}} catch (Exception ex) {}
+        }      
+    } 
 
     private Connection createConnection() throws Exception {
         try {
