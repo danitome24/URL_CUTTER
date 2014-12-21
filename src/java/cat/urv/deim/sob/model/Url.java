@@ -5,16 +5,35 @@
  */
 package cat.urv.deim.sob.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author danie_000
  */
+@XmlRootElement(name = "url")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Url {
 
     private String url;
     private int idUrl;
     private String urlShort;
     private int numVisits;
+
+    public Url(String url, int idUrl, String urlShort, int num) {
+        this.url = url;
+        this.idUrl = idUrl;
+        this.urlShort = urlShort;
+        this.numVisits = num;
+    }
+
+    //Empty constructor
+
+    public Url() {
+
+    }
 
     public String getUrl() {
         return this.url;

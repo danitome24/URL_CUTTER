@@ -15,6 +15,8 @@
                 <li><a href="addurl.jsp">Add URL</a></li>
                 <li class="divider"></li>
                 <li><a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1&delete=1" >Delete URL</a></li>
+                <li class="divider"></li>
+                <li><a href="export.jsp" >Export URL</a></li>
             </ul>
         </div>
         <div class="nav navbar-nav navbar-brand" id="menulogin">

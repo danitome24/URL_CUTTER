@@ -8,14 +8,14 @@
         <servlet-class>cat.urv.deim.sob.ControllerServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
+    <!--<servlet>
         <servlet-name>SAXServlet</servlet-name>
         <servlet-class>SAX.SaxServlet</servlet-class>
         <init-param>
             <param-name>input</param-name>
             <param-value>Order.xml</param-value>
         </init-param>
-    </servlet>
+    </servlet>-->
 
     <servlet-mapping>
         <servlet-name>controller</servlet-name>
@@ -25,11 +25,11 @@
         <servlet-name>controller</servlet-name>
         <url-pattern>/url/*</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+   <!-- <servlet-mapping>
         <servlet-name>SAXServlet</servlet-name>
         <url-pattern>/exportUrl.xml</url-pattern>
     </servlet-mapping>
-    
+    -->
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
         <welcome-file>login.html</welcome-file>

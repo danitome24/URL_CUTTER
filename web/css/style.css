@@ -5,6 +5,9 @@ body {
     padding-left:  10%;
     padding-right: 10%;
 }
+.paddingBottom{
+    margin-bottom: 7px;
+}
 
 
 ul {

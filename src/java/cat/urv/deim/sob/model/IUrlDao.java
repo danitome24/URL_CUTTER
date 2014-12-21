@@ -21,4 +21,5 @@ public interface IUrlDao {
     public int getNumberOfRow();
     public boolean insertRelation(int idUrl, int idUser)throws DaoException;
     public boolean deleteUrl(int id, int idUser) throws DaoException;
+    public Collection fetchAllUrlFromUser(int idUser) throws DaoException;
 }
