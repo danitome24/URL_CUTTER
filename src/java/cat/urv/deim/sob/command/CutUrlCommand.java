@@ -44,7 +44,7 @@ public class CutUrlCommand implements Command {
                 url.setUrl(urlName);
                 String hashUrl = getHashUrl(url.getUrl());
                 
-                String urlShortAll = "http://localhost:8080/SOB/url/" + hashUrl;
+                String urlShortAll = "http://short.ly:8080/SOB/url/" + hashUrl;
                 url.setUrlShort(urlShortAll);
                 request.setAttribute("urlCorta", urlShortAll);
                 request.setAttribute("urlLarga", urlName);
