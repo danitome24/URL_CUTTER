@@ -279,7 +279,7 @@ public class UrlDaoImp implements IUrlDao {
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                Url url = new Url(rs.getString(Config.ATTR_URL_NAME),rs.getInt("ID_URL"),rs.getString("URL_SHORT"),rs.getInt(Config.ATTR_URL_NUMVISITS));              
+                Url url = new Url(rs.getString(Config.ATTR_URL_NAME),rs.getInt("ID_URL"),rs.getString("URL_SHORT"),rs.getInt(Config.ATTR_URL_NUMVISITS));
                 retornUrl.add(url);
             }                  
         return retornUrl;           
