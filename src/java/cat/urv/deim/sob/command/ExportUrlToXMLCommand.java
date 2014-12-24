@@ -14,6 +14,7 @@ import cat.urv.deim.sob.model.User;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,7 +36,7 @@ import javax.xml.bind.Marshaller;
  */
 public class ExportUrlToXMLCommand implements Command {
 
-    private static String PATH_DATA = "C:/Users/Daniel/Documents/NetbeansProjects/sob_url/web/data/";
+    private static final String PATH_DATA = "C:/Users/Daniel/Documents/NetbeansProjects/sob_url/web/data/";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,15 +58,13 @@ public class ExportUrlToXMLCommand implements Command {
         //get path to be dinamic
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getRealPath(File.separator);
+        out.println(contextPath);
         String path = PATH_DATA + user.getId() + ".xml";
-        out.println(PATH_DATA);
+
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
             //importamos las Url de un usuario
             Collection urls = urlDao.fetchAllUrlFromUser(user.getId());
-            JAXBContext jaxbContext = JAXBContext.newInstance(UrlList.class);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             LinkedList<Url> urlList = new LinkedList();
             Iterator it = urls.iterator();
             while (it.hasNext()) {
@@ -75,20 +74,24 @@ public class ExportUrlToXMLCommand implements Command {
             UrlList urlList2 = new UrlList();
             urlList2.setUrlList(urlList);
 
-            File file = new File(path);
-            FileInputStream inStream = new FileInputStream(file);
-            jaxbMarshaller.marshal(urlList2, file);
-            if (typeOfXml == 1) {
+            FileOutputStream file = new FileOutputStream(path);
+            JAXBContext jaxbContext = JAXBContext.newInstance(UrlList.class);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            jaxbMarshaller.marshal(urlList2, file);
+
+            if (typeOfXml == 1) {
+                FileInputStream inStream = new FileInputStream(path);
                 //Downloading the file
                 String mimeType = servletContext.getMimeType(path);
                 System.out.println("MIME type: " + mimeType);
-
+                File fileToDownload = new File(path);
                 response.setContentType(mimeType);
-                response.setContentLength((int) file.length());
+                response.setContentLength((int) fileToDownload.length());
 
                 String headerKey = "Content-Disposition";
-                String headerValue = String.format("attachment; filename=\"%s\"", file.getName());
+                String headerValue = String.format("attachment; filename=\"%s\"", fileToDownload.getName());
                 response.setHeader(headerKey, headerValue);
 
                 OutputStream outStream = response.getOutputStream();
