@@ -5,6 +5,7 @@
  */
 package cat.urv.deim.sob.model;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "url")
 @XmlAccessorType (XmlAccessType.FIELD)
-public class Url {
+public class Url implements Serializable{
 
     private String url;
     private int idUrl;
