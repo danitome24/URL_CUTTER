@@ -35,7 +35,7 @@ public class DeleteUrlCommand implements Command{
         try {
             urlDeleted = urlDao.deleteUrl(idUrlToRemove, user.getId());
             ServletContext context = request.getSession().getServletContext();
-            context.getRequestDispatcher("/http://localhost:8080/SOB/index.do?form_action=showUrl&page=1").forward(request, response);
+            context.getRequestDispatcher("/http://localhost:8080/S/index.do?form_action=showUrl&page=1").forward(request, response);
         } catch (DaoException ex) {
             ex.toString();
         }
