@@ -7,14 +7,14 @@
 
     <div class="container-fluid">
         <div class="navbar-header">               
-            <a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1" class="navbar-brand" id="navhead">URL Cutter</a>
+            <a href="http://localhost:8080/S/index.do?form_action=showUrl&page=1" class="navbar-brand" id="navhead">URL Cutter</a>
         </div>
         <div class="dropdown navbar-brand" id="dropurl">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="menuurl">Manage </a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="addurl.jsp">Add URL</a></li>
                 <li class="divider"></li>
-                <li><a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1&delete=1" >Delete URL</a></li>
+                <li><a href="http://localhost:8080/S/index.do?form_action=showUrl&page=1&delete=1" >Delete URL</a></li>
                 <li class="divider"></li>
                 <li><a href="export.jsp" >Export URL</a></li>
             </ul>

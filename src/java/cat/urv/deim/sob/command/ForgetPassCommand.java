@@ -11,7 +11,6 @@ import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import cat.urv.deim.sob.model.UserDaoImp;
 import java.io.IOException;
-import static java.lang.System.out;
 import java.util.Properties;
 import java.util.Random;
 import javax.mail.Authenticator;

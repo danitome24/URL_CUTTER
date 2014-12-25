@@ -66,7 +66,7 @@
                         <% 
                         if((Boolean)request.getAttribute("delete")!= null) { %>
                         <td>                          
-                            <a class="btn btn-danger remove_fields" href="http://localhost:8080/SOB/deleteUrl.do?form_action=deleteUrl&id=<%=id%>">
+                            <a class="btn btn-danger remove_fields" href="http://localhost:8080/S/deleteUrl.do?form_action=deleteUrl&id=<%=id%>">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>  
                         </td>
@@ -84,17 +84,17 @@
                     <%
                         if (currentPage - 1 > 0) {
                     %>
-                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage - 1%>"> < </a></li>
+                    <li><a href="http://localhost:8080/S/login.do?form_action=showUrl&page=<%=currentPage - 1%>"> < </a></li>
                         <% } %>
                         <% for (int i = 1; i <= numOfPages; i++) {%> 
                         <% if (numOfPages > 1) {%>
-                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=i%>"i><%=i%></a></li>
+                    <li><a href="http://localhost:8080/S/login.do?form_action=showUrl&page=<%=i%>"i><%=i%></a></li>
                         <% }%>
                         <% } %>
                         <%
                             if (currentPage + 1 <= numOfPages) {
                         %>
-                    <li><a href="http://localhost:8080/SOB/login.do?form_action=showUrl&page=<%=currentPage + 1%>"> > </a></li>
+                    <li><a href="http://localhost:8080/S/login.do?form_action=showUrl&page=<%=currentPage + 1%>"> > </a></li>
                         <% }%>
                 </ul>
             </nav>

@@ -26,8 +26,8 @@
             <div class="col-md-6 col-md-offset-3 colored border-login">
                 <h2>Export</h2>             
                 <div>                        
-                    <a href="http://localhost:8080/SOB/export.do?form_action=exportUrl&t=1"><button class="btn btn-info col-md-offset-2 col-md-3 paddingBottom">Download <span class="glyphicon glyphicon-download"></span></button></a>
-                    <a href="http://localhost:8080/SOB/export.do?form_action=exportUrl&t=2"><button class="btn btn-info col-md-offset-1 col-md-3">View <span class="glyphicon glyphicon-eye-open"></span></button></a>
+                    <a href="http://localhost:8080/S/export.do?form_action=exportUrl&t=1"><button class="btn btn-info col-md-offset-2 col-md-3 paddingBottom">Download <span class="glyphicon glyphicon-download"></span></button></a>
+                    <a href="http://localhost:8080/S/export.do?form_action=exportUrl&t=2"><button class="btn btn-info col-md-offset-1 col-md-3">View <span class="glyphicon glyphicon-eye-open"></span></button></a>
                 </div>
                 </form>
             </div>                
