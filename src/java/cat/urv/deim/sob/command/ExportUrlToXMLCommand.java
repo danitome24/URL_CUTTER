@@ -6,6 +6,7 @@
 package cat.urv.deim.sob.command;
 
 import ObjectList.UrlList;
+import SAXparser.SaxHandler;
 import cat.urv.deim.sob.Config;
 import cat.urv.deim.sob.model.IUrlDao;
 import cat.urv.deim.sob.model.Url;
@@ -29,7 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
-import javax.xml.transform.Result;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  *
@@ -120,6 +122,21 @@ public class ExportUrlToXMLCommand implements Command {
                 context.getRequestDispatcher("/showXML.jsp").forward(request, response);
 
             }
+            
+            /**
+             * SAX parse
+             */
+            // instantiate a SAX parser
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
+
+            // instantiate our little demo handler
+            SaxHandler handler = new SaxHandler();
+            // parse the file
+            parser.parse( path, handler );
+            
+            // obtain the order
+            out.println ( handler.getOutput() );
 
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/index.jsp").forward(request, response);
