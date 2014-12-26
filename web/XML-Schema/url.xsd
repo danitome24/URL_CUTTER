@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="UrlList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="url"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="url">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="url" type="xs:string"/>
+        <xs:element name="idUrl" type="xs:integer"/>
+        <xs:element name="urlShort" type="xs:string"/>
+        <xs:element name="numVisits" type="xs:integer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
