@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <UrlList>
     <url>
-        <url>http://www.mkyong.com/java/how-to-read-xml-file-in-java-sax-parser/</url>
-        <idUrl>65</idUrl>
-        <urlShort>http://short.ly:8080/SOB/url/446309</urlShort>
-        <numVisits>0</numVisits>
-    </url>
-    <url>
-        <url>http://moodle.urv.cat/moodle/course/view.php?id=60809</url>
-        <idUrl>66</idUrl>
-        <urlShort>http://short.ly:8080/SOB/url/51c882</urlShort>
-        <numVisits>0</numVisits>
-    </url>
-    <url>
-        <url>https://bitbucket.org/danitome/sob_web/issues?status=new&amp;status=open</url>
-        <idUrl>67</idUrl>
-        <urlShort>http://short.ly:8080/SOB/url/ab674d</urlShort>
-        <numVisits>0</numVisits>
+        <url>http://www.marca.com/2014/12/25/futbol/equipos/real_madrid/1419534785.html</url>
+        <idUrl>69</idUrl>
+        <urlShort>http://short.ly:8080/S/url/4007ba</urlShort>
+        <numVisits>1</numVisits>
     </url>
 </UrlList>

@@ -37,7 +37,20 @@
                 <script type="text/javascript">
                     SyntaxHighlighter.all();
                 </script>
+                <%
+                    if (request.getAttribute("xmlIsValid") != null) {
+                %>
+
+                <div class="col-md-5 col-md-offset-2">
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>SUCCESS!</strong> <%=request.getAttribute("xmlIsValid")%>
+                    </div>
+                </div>
+
+                <% }%>
             </div>
         </div>
+
     </body>
 </html>

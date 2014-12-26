@@ -30,8 +30,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.SAXException;
+import validation.XSDValidator;
 
 /**
  *
@@ -40,20 +43,15 @@ import javax.xml.parsers.SAXParserFactory;
 public class ExportUrlToXMLCommand implements Command {
 
     private static final String PATH_DATA = "C:/Users/Daniel/Documents/NetbeansProjects/sob_url/web/data/";
+    private static final String PATH_XSD_VALIDATOR = "C:/Users/Daniel/Documents/NetBeansProjects/sob_url/web/XML-Schema/url.xsd";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        out.println("Exportar las url en un documento XML");
         int typeOfXml = Integer.parseInt(request.getParameter("t"));
         //Controll the parameter
         if (typeOfXml != 1 && typeOfXml != 2) {
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/error.jsp").forward(request, response);
-        }
-        if (typeOfXml == 1) {
-            out.println("Hay que descargar");
-        } else if (typeOfXml == 2) {
-            out.println("Hay que visualizar");
         }
         HttpSession userSession = request.getSession(true);
         User user = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
@@ -61,7 +59,6 @@ public class ExportUrlToXMLCommand implements Command {
         //get path to be dinamic
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getRealPath(File.separator);
-        out.println(contextPath);
         String path = PATH_DATA + user.getId() + ".xml";
 
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
@@ -83,6 +80,12 @@ public class ExportUrlToXMLCommand implements Command {
 
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(urlList2, file);
+            boolean isWellFormed = wellFormedXMLFile(request, path);
+            boolean isValid = validateXMLFile(request, path);
+
+            if(isValid && isWellFormed) {
+                request.setAttribute("xmlIsValid", "The XML file is valid");
+            }
 
             if (typeOfXml == 1) {
                 FileInputStream inStream = new FileInputStream(path);
@@ -108,7 +111,6 @@ public class ExportUrlToXMLCommand implements Command {
                 inStream.close();
                 outStream.close();
             } else if (typeOfXml == 2) {
-                out.println("CASE 2");
                 StringBuffer buffer = new StringBuffer();
                 BufferedReader in = new BufferedReader(new FileReader(path));
                 String str = "";
@@ -122,22 +124,6 @@ public class ExportUrlToXMLCommand implements Command {
                 context.getRequestDispatcher("/showXML.jsp").forward(request, response);
 
             }
-            
-            /**
-             * SAX parse
-             */
-            // instantiate a SAX parser
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
-
-            // instantiate our little demo handler
-            SaxHandler handler = new SaxHandler();
-            // parse the file
-            parser.parse( path, handler );
-            
-            // obtain the order
-            out.println ( handler.getOutput() );
-
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/index.jsp").forward(request, response);
 
@@ -145,6 +131,49 @@ public class ExportUrlToXMLCommand implements Command {
             ex.toString();
         }
 
+    }
+
+    /**
+     * Validate the content of the XML file
+     *
+     * @param request
+     * @param path
+     * @return boolean
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
+     */
+    public boolean validateXMLFile(HttpServletRequest request, String path) throws ParserConfigurationException, SAXException, IOException {
+        XSDValidator validator = new XSDValidator(PATH_XSD_VALIDATOR, path);
+        boolean xmlIsValid = validator.validateXML();
+        if (xmlIsValid) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Well Formed of XML file
+     *
+     * @param request
+     * @param path
+     * @return boolean
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    public boolean wellFormedXMLFile(HttpServletRequest request, String path) throws ParserConfigurationException, SAXException, IOException {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser parser = factory.newSAXParser();
+
+        // instantiate our little demo handler
+        SaxHandler handler = new SaxHandler();
+        // parse the file
+        parser.parse(path, handler);
+        out.println(handler.getOutput());
+        return true;
     }
 
 }
