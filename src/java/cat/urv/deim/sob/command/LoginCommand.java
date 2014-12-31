@@ -33,13 +33,14 @@ public class LoginCommand implements Command {
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
             isValid = userDAO.login(usuari);
-            if (isValid) {            
+            if (isValid) {
                 User idUser = userDAO.findUserByName(usuari);
                 Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
                 loginCookie.setMaxAge(30 * 60); //expire in 30 min
                 usuari.setId(idUser.getId());
                 response.addCookie(loginCookie);
                 userSession.setAttribute(Config.ATTR_SERVLET_USER, idUser);
+                System.out.println(hello("Daniel"));
             }
         } catch (DaoException ex) {
             ex.printStackTrace();
@@ -47,11 +48,17 @@ public class LoginCommand implements Command {
         if (isValid) {
             response.sendRedirect("http://localhost:8080/S/login.do?form_action=showUrl&page=1");
         } else {
-            request.setAttribute("errorLogin","The user is not in the system");
+            request.setAttribute("errorLogin", "The user is not in the system");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/login.jsp").forward(request, response);
         }
 
     }
 
-}
+    private static String hello(java.lang.String name) {
+        com.service.UrlWebService_Service service = new com.service.UrlWebService_Service();
+        com.service.UrlWebService port = service.getUrlWebServicePort();
+        return port.hello(name);
+    }
+
+    }

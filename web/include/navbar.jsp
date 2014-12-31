@@ -57,7 +57,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <p>
-                                        <a href="http://localhost:8080/SOB/logout.do?form_action=logout" class="btn btn-danger btn-block">Sign Out</a>
+                                        <a href="http://localhost:8080/S/logout.do?form_action=logout" class="btn btn-danger btn-block">Sign Out</a>
                                     </p>
                                 </div>
                             </div>
