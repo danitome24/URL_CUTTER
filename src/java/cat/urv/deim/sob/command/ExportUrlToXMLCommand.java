@@ -42,7 +42,7 @@ import validation.XSDValidator;
  */
 public class ExportUrlToXMLCommand implements Command {
 
-    private static final String PATH_XSD_VALIDATOR = "C:/Users/Daniel/Documents/NetBeansProjects/sob_url/web/XML-Schema/url.xsd";
+    private static String PATH_XSD_VALIDATOR = null;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,9 +59,8 @@ public class ExportUrlToXMLCommand implements Command {
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getRealPath(File.separator);
 
-        out.println(contextPath);
-        String path = contextPath + user.getId() + ".xml";
-
+        String path = contextPath +"data\\"+ user.getId() + ".xml";
+        PATH_XSD_VALIDATOR = contextPath + "XML-Schema\\url.xsd";
 
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
@@ -146,14 +145,10 @@ public class ExportUrlToXMLCommand implements Command {
      * @throws java.io.IOException
      */
     public boolean validateXMLFile(HttpServletRequest request, String path) throws ParserConfigurationException, SAXException, IOException {
+        System.out.println("PATH: "+path);
         XSDValidator validator = new XSDValidator(PATH_XSD_VALIDATOR, path);
         boolean xmlIsValid = validator.validateXML();
-        if (xmlIsValid) {
-
-            return true;
-        } else {
-            return false;
-        }
+        return xmlIsValid;
     }
 
     /**
