@@ -62,7 +62,7 @@ public class FormCommand implements Command {
                             userSession.setAttribute(Config.ATTR_SERVLET_USER, usuari);
                         }
                         ServletContext context = request.getSession().getServletContext();
-                        context.getRequestDispatcher("/http://localhost:8080/S/login.do?form_action=showUrl&page=1").forward(request, response);
+                        context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
                     } else {
                         request.setAttribute("password", "The two passwords are different");
                         ServletContext context = request.getSession().getServletContext();

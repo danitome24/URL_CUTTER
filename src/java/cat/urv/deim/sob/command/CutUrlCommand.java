@@ -36,21 +36,22 @@ public class CutUrlCommand implements Command {
         request.setAttribute("urlCorta", null);
         urlName = request.getParameter(Config.ATTR_URL_NAME);
         if (urlName.length() >= 26 && urlName != null) {
-            try {
-                User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
-                userSession.setAttribute("lengthUrl", null);
-                
-                Url url = new Url();
-                url.setUrl(urlName);
-                String hashUrl = getHashUrl(url.getUrl());
-                
-                String urlShortAll = "http://short.ly:8080/S/url/" + hashUrl;
-                url.setUrlShort(urlShortAll);
-                request.setAttribute("urlCorta", urlShortAll);
-                request.setAttribute("urlLarga", urlName);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(CutUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
+            userSession.setAttribute("lengthUrl", null);
+            Url url = new Url();
+            url.setUrl(urlName);
+            /**
+             * Web Service Call
+             */
+            String hashUrl = urlCut(url.getUrl());
+            /**
+             * 
+             */
+            String urlShortAll = "http://short.ly:8080/SOB/url/" + hashUrl;
+            url.setUrlShort(urlShortAll);
+            request.setAttribute("urlCorta", urlShortAll);
+            request.setAttribute("urlLarga", urlName);
+            
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         } else {
@@ -73,6 +74,12 @@ public class CutUrlCommand implements Command {
             hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
         }
         return hexStr;
+    }
+
+    private static String urlCut(java.lang.String url) {
+        com.service.UrlWebService_Service service = new com.service.UrlWebService_Service();
+        com.service.UrlWebService port = service.getUrlWebServicePort();
+        return port.urlCut(url);
     }
 
 }

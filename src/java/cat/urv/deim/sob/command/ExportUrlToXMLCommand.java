@@ -42,7 +42,6 @@ import validation.XSDValidator;
  */
 public class ExportUrlToXMLCommand implements Command {
 
-    private static final String PATH_DATA = "C:/Users/Daniel/Documents/NetbeansProjects/sob_url/web/data/";
     private static final String PATH_XSD_VALIDATOR = "C:/Users/Daniel/Documents/NetBeansProjects/sob_url/web/XML-Schema/url.xsd";
 
     @Override
@@ -59,7 +58,10 @@ public class ExportUrlToXMLCommand implements Command {
         //get path to be dinamic
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getRealPath(File.separator);
-        String path = PATH_DATA + user.getId() + ".xml";
+
+        out.println(contextPath);
+        String path = contextPath + user.getId() + ".xml";
+
 
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {

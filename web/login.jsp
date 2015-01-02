@@ -42,7 +42,7 @@
                     User user = userDAO.findUserByName(newUser);
                     if (user.getId() != -1) {
                         userSession.setAttribute(Config.ATTR_SERVLET_USER, user);
-                        response.sendRedirect("http://localhost:8080/S/login.do?form_action=showUrl&page=1");
+                        response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
                     }
                 }
             }
