@@ -39,7 +39,6 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class ExportUrlToXMLCommand implements Command {
 
-    private static final String PATH_DATA = "C:/Users/Daniel/Documents/NetbeansProjects/sob_url/web/data/";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,7 +61,7 @@ public class ExportUrlToXMLCommand implements Command {
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getRealPath(File.separator);
         out.println(contextPath);
-        String path = PATH_DATA + user.getId() + ".xml";
+        String path = contextPath + user.getId() + ".xml";
 
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {

@@ -11,8 +11,6 @@ import cat.urv.deim.sob.model.IUrlDao;
 import cat.urv.deim.sob.model.UrlDaoFactory;
 import cat.urv.deim.sob.model.User;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +33,7 @@ public class DeleteUrlCommand implements Command{
         try {
             urlDeleted = urlDao.deleteUrl(idUrlToRemove, user.getId());
             ServletContext context = request.getSession().getServletContext();
-            context.getRequestDispatcher("/http://localhost:8080/S/index.do?form_action=showUrl&page=1").forward(request, response);
+            context.getRequestDispatcher("/http://localhost:8080/SOB/index.do?form_action=showUrl&page=1").forward(request, response);
         } catch (DaoException ex) {
             ex.toString();
         }

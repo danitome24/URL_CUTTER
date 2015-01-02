@@ -40,13 +40,12 @@ public class LoginCommand implements Command {
                 usuari.setId(idUser.getId());
                 response.addCookie(loginCookie);
                 userSession.setAttribute(Config.ATTR_SERVLET_USER, idUser);
-                System.out.println(hello("Daniel"));
             }
         } catch (DaoException ex) {
             ex.printStackTrace();
         }
         if (isValid) {
-            response.sendRedirect("http://localhost:8080/S/login.do?form_action=showUrl&page=1");
+            response.sendRedirect("http://localhost:8080/SOB/login.do?form_action=showUrl&page=1");
         } else {
             request.setAttribute("errorLogin", "The user is not in the system");
             ServletContext context = request.getSession().getServletContext();
@@ -55,10 +54,5 @@ public class LoginCommand implements Command {
 
     }
 
-    private static String hello(java.lang.String name) {
-        com.service.UrlWebService_Service service = new com.service.UrlWebService_Service();
-        com.service.UrlWebService port = service.getUrlWebServicePort();
-        return port.hello(name);
-    }
 
     }

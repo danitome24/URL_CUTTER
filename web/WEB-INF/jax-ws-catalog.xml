@@ -2,6 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/SOB_WS/UrlWebService?wsdl" uri="wsdl/localhost_8080/SOB_WS/UrlWebService.wsdl"/>
     <system systemId="http://localhost:8080/SOB_WS/UrlWebService?xsd=1" uri="wsdl/localhost_8080/SOB_WS/UrlWebService.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/sob_ws/UrlWebService?wsdl" uri="wsdl/localhost_8080/SOB_WS/UrlWebService.wsdl"/>
-    <system systemId="http://localhost:8080/sob_ws/UrlWebService?xsd=1" uri="wsdl/localhost_8080/SOB_WS/UrlWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/sob_ws/UrlWebService?wsdl" uri="wsdl/localhost_8080/sob_ws/UrlWebService.wsdl"/>
+    <system systemId="http://localhost:8080/sob_ws/UrlWebService?xsd=1" uri="wsdl/localhost_8080/sob_ws/UrlWebService.xsd_1.xsd"/>
 </catalog>
