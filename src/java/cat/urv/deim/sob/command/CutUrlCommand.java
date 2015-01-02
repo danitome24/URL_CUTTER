@@ -10,6 +10,7 @@ import cat.urv.deim.sob.model.IUrlDao;
 import cat.urv.deim.sob.model.Url;
 import cat.urv.deim.sob.model.UrlDaoFactory;
 import cat.urv.deim.sob.model.User;
+import com.service.NoSuchAlgorithmException_Exception;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.security.MessageDigest;
@@ -43,19 +44,24 @@ public class CutUrlCommand implements Command {
             /**
              * Web Service Call
              */
-            String hashUrl = urlCut(url.getUrl());
-            /**
-             * 
-             */
-            String urlShortAll = "http://short.ly:8080/SOB/url/" + hashUrl;
-            url.setUrlShort(urlShortAll);
-            request.setAttribute("urlCorta", urlShortAll);
-            request.setAttribute("urlLarga", urlName);
-            
+            String hashUrl;
+            try {
+                hashUrl = urlCut(url.getUrl());
+
+                /**
+                 *
+                 */
+                String urlShortAll = "http://short.ly:8080/SOB/url/" + hashUrl;
+                url.setUrlShort(urlShortAll);
+                request.setAttribute("urlCorta", urlShortAll);
+                request.setAttribute("urlLarga", urlName);
+            } catch (NoSuchAlgorithmException_Exception ex) {
+                Logger.getLogger(CutUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
         } else {
-            
+
             request.setAttribute("lengthUrl", "The url is too short");
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/addurl.jsp").forward(request, response);
@@ -76,7 +82,7 @@ public class CutUrlCommand implements Command {
         return hexStr;
     }
 
-    private static String urlCut(java.lang.String url) {
+    private static String urlCut(java.lang.String url) throws NoSuchAlgorithmException_Exception {
         com.service.UrlWebService_Service service = new com.service.UrlWebService_Service();
         com.service.UrlWebService port = service.getUrlWebServicePort();
         return port.urlCut(url);

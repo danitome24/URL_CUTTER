@@ -4,39 +4,24 @@
 <xsd:import namespace="http://service.com/" schemaLocation="http://localhost:8080/sob_ws/UrlWebService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="hello">
-<part name="parameters" element="tns:hello"/>
-</message>
-<message name="helloResponse">
-<part name="parameters" element="tns:helloResponse"/>
-</message>
 <message name="urlCut">
 <part name="parameters" element="tns:urlCut"/>
 </message>
 <message name="urlCutResponse">
 <part name="parameters" element="tns:urlCutResponse"/>
 </message>
+<message name="NoSuchAlgorithmException">
+<part name="fault" element="tns:NoSuchAlgorithmException"/>
+</message>
 <portType name="UrlWebService">
-<operation name="hello">
-<input wsam:Action="http://service.com/UrlWebService/helloRequest" message="tns:hello"/>
-<output wsam:Action="http://service.com/UrlWebService/helloResponse" message="tns:helloResponse"/>
-</operation>
 <operation name="urlCut">
 <input wsam:Action="http://service.com/UrlWebService/urlCutRequest" message="tns:urlCut"/>
 <output wsam:Action="http://service.com/UrlWebService/urlCutResponse" message="tns:urlCutResponse"/>
+<fault message="tns:NoSuchAlgorithmException" name="NoSuchAlgorithmException" wsam:Action="http://service.com/UrlWebService/urlCut/Fault/NoSuchAlgorithmException"/>
 </operation>
 </portType>
 <binding name="UrlWebServicePortBinding" type="tns:UrlWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="hello">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="urlCut">
 <soap:operation soapAction=""/>
 <input>
@@ -45,6 +30,9 @@
 <output>
 <soap:body use="literal"/>
 </output>
+<fault name="NoSuchAlgorithmException">
+<soap:fault name="NoSuchAlgorithmException" use="literal"/>
+</fault>
 </operation>
 </binding>
 <service name="UrlWebService">
