@@ -12,7 +12,6 @@ import cat.urv.deim.sob.model.Url;
 import cat.urv.deim.sob.model.UrlDaoFactory;
 import cat.urv.deim.sob.model.User;
 import java.io.IOException;
-import static java.lang.System.out;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +33,9 @@ public class AddUrlCommand implements Command {
         User user = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
         Url urlFind = new Url();
         url.setUrl(request.getParameter("url"));
-        url.setUrlShort(request.getParameter("urlShort"));
+        String hashUrl = request.getParameter("urlShort").substring(20);
+        url.setUrlShort(hashUrl);
+        
         boolean exists = false;
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {

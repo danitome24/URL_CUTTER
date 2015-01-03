@@ -25,9 +25,9 @@ public class RedirectCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getRequestURL().toString();
+        String path = request.getPathInfo().substring(1);
         String longUrl = null;
-        
+        System.out.println(path);
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
             Url url = urlDao.getLongUrl(path);

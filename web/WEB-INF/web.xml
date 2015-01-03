@@ -16,7 +16,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>controller</servlet-name>
-        <url-pattern>/url/*</url-pattern>
+        <url-pattern>/r/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>

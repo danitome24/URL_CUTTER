@@ -58,7 +58,7 @@
                             <%= url%>
                         </td>
                         <td>
-                            <%=urlShort%>
+                            <%="short.ly:8080/SOB/r/"+urlShort%>
                         </td>
                         <td>
                             <%= nVisits%>

@@ -36,10 +36,9 @@ public class ControllerServlet extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-
+        ServletContext servletContext = getServletContext();
         out.println("URI: " + request.getRequestURI());
         out.println("Path: " + request.getPathInfo());
-
         String formAction = request.getParameter("form_action");
         String path = request.getPathInfo();
         if (null == formAction && path != null) {
