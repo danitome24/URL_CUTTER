@@ -28,22 +28,22 @@ $(document).ready(function () {
     });
 
     /*$('#nomUsuariForm').keyup(function () {
-        var name = $(this).val();
-        $.get('registre.do?form_action=form', {
-            username: name
-        }, function (responseText) {
-            if (responseText === "repeat") {
-                document.getElementById("repeat").innerHTML = responseText;
-            }
-            else {
-                document.getElementById("repeat").innerHTML = responseText;
-            }
-        });
-    });*/
+     var name = $(this).val();
+     $.get('registre.do?form_action=form', {
+     username: name
+     }, function (responseText) {
+     if (responseText === "repeat") {
+     document.getElementById("repeat").innerHTML = responseText;
+     }
+     else {
+     document.getElementById("repeat").innerHTML = responseText;
+     }
+     });
+     });*/
 
     $('#url').keyup(function () {
         var url = $(this).val();
-        if (url.length<26){
+        if (url.length < 26) {
             $("#shorturl").removeClass('hide');
             $("#SubmitAddUrl").addClass('disabled');
         }
@@ -52,10 +52,43 @@ $(document).ready(function () {
             $("#SubmitAddUrl").removeClass('disabled');
         }
     });
+
+    var req;
+    var target;
+    var isIE;
+    //Function to get XMLHttpRequest
+    function initRequest() {
+        if (window.XMLHttpRequest) {
+            req = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            isIE = true;
+            req = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+
+    $('#nomUsuariForm').keyup(function () {
+        target = $('#nomUsuariForm').val();
+        var url = "validateUser.do?form_action=validate&user=" + escape(target);
+        
+        initRequest();
+
+        req.onreadystatechange = callback;
+        req.open("GET", url);
+        req.send();
+    });
     
-    
-    
-    
+    function callback(){
+        var isRepeat = req.responseXML.getElementsByTagName("repeat")[0].childNodes[0].nodeValue;
+        if(isRepeat){
+            $('#userNameValid').removeClass('hide');
+        }else{
+            $('#userNameValid').addClass('hide');
+        }
+    }
+
+
+
+
 
     /*
      $.post('registre.do?form_action=form', {
@@ -68,7 +101,7 @@ $(document).ready(function () {
      document.getElementById("checkpw").innerHTML = "OK";
      }      
      });*/
-    
-    
-    
+
+
+
 });

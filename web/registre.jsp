@@ -37,6 +37,7 @@
                         <div class="form-group col-md-6">
                             <label for="nomusuari">User Name:</label>
                             <input required="" name="username" type="text" class="form-control input-sm" id="nomUsuariForm" >
+                            <span id="userNameValid" class="hide">This user is already used</span>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="secondname"> Last Name:</label>

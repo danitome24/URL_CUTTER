@@ -30,6 +30,7 @@ public class ControllerServlet extends HttpServlet {
         this.commands.put("changeName", new ChangeNameCommand());
         this.commands.put("deleteUrl", new DeleteUrlCommand());
         this.commands.put("exportUrl", new ExportUrlToXMLCommand());
+        this.commands.put("validate", new UserIsRepeatCommand());
     }
 
     protected void processCommand(

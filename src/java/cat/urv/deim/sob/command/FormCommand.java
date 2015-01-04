@@ -30,9 +30,6 @@ import java.util.regex.Pattern;
  */
 public class FormCommand implements Command {
 
-    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
-    private Pattern pattern;
-    private Matcher matcher;
 
     @Override
     public void execute(HttpServletRequest request,
