@@ -7,11 +7,14 @@ package cat.urv.deim.sob.command;
 
 import cat.urv.deim.sob.Config;
 import cat.urv.deim.sob.DaoException;
+import cat.urv.deim.sob.MD5Crypt;
 import cat.urv.deim.sob.model.IUserDao;
 import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import java.io.IOException;
-import static java.lang.System.out;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -40,19 +43,19 @@ public class FormCommand implements Command {
             IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
             boolean inserit = false;
             usuari.setFirstName(request.getParameter(Config.ATTR_USER_FIRSTNAME));
-            usuari.setPassword(request.getParameter(Config.ATTR_USER_PASSWORD));
             usuari.setLastName(request.getParameter(Config.ATTR_USER_LASTNAME));
             usuari.setUserName(request.getParameter(Config.ATTR_USER_USERNAME));
             usuari.setEmail(request.getParameter(Config.ATTR_USER_EMAIL));
 
             boolean isRepeat = userDAO.isUsernameRepeat(usuari);
             if (!isRepeat) {
-                boolean passwordIsValid = validatePassword(request.getParameter("password"));
-                if (passwordIsValid) {
-                    if (request.getParameter("password").equals(request.getParameter("password2"))) {
+                        String plainPass = request.getParameter(Config.ATTR_USER_PASSWORD);
+                        MD5Crypt crypt = new MD5Crypt(plainPass);
+                        String md5Pass = crypt.cryptMD5();
+                        usuari.setPassword(md5Pass);
                         inserit = userDAO.add(usuari);
                         if (inserit) {
-                            
+
                             HttpSession userSession = request.getSession(true);
                             Cookie loginCookie = new Cookie(Config.COOKIE_USER, usuari.getUserName());
                             loginCookie.setMaxAge(30 * 60); //expire in 30 min
@@ -63,16 +66,6 @@ public class FormCommand implements Command {
                         }
                         ServletContext context = request.getSession().getServletContext();
                         context.getRequestDispatcher("/http://localhost:8080/SOB/login.do?form_action=showUrl&page=1").forward(request, response);
-                    } else {
-                        request.setAttribute("password", "The two passwords are different");
-                        ServletContext context = request.getSession().getServletContext();
-                        context.getRequestDispatcher("/registre.jsp").forward(request, response);
-                    }
-                } else {
-                    request.setAttribute("password", "The password doesn't comply the requirements");
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/registre.jsp").forward(request, response);
-                }
             } else {
 
                 request.setAttribute("user", "This user is used");
@@ -80,17 +73,11 @@ public class FormCommand implements Command {
                 context.getRequestDispatcher("/registre.jsp").forward(request, response);
             }
 
-        } catch (DaoException ex) {
-            ex.printStackTrace();
+        } catch (DaoException | NoSuchAlgorithmException ex) {
+            Logger.getLogger(FormCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    private boolean validatePassword(String password) {
 
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-        return matcher.matches();
-
-    }
 }

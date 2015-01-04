@@ -7,10 +7,14 @@ package cat.urv.deim.sob.command;
 
 import cat.urv.deim.sob.Config;
 import cat.urv.deim.sob.DaoException;
+import cat.urv.deim.sob.MD5Crypt;
 import cat.urv.deim.sob.model.IUserDao;
 import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -29,7 +33,15 @@ public class LoginCommand implements Command {
         boolean isValid = false;
         HttpSession userSession = request.getSession(true);
         usuari.setUserName(request.getParameter(Config.ATTR_USER_USERNAME));
-        usuari.setPassword(request.getParameter(Config.ATTR_USER_PASSWORD));
+        MD5Crypt crypt = new MD5Crypt(request.getParameter(Config.ATTR_USER_PASSWORD));
+        String md5Pass;
+        try {
+            md5Pass = crypt.cryptMD5();
+            usuari.setPassword(md5Pass);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
             isValid = userDAO.login(usuari);

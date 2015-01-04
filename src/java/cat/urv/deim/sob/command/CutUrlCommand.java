@@ -33,36 +33,31 @@ public class CutUrlCommand implements Command {
         Url urlFind = null;
         request.setAttribute("urlCorta", null);
         urlName = request.getParameter(Config.ATTR_URL_NAME);
-        if (urlName.length() >= 26 && urlName != null) {
-            User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
-            userSession.setAttribute("lengthUrl", null);
-            Url url = new Url();
-            url.setUrl(urlName);
+
+        User idUser = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
+        userSession.setAttribute("lengthUrl", null);
+        Url url = new Url();
+        url.setUrl(urlName);
+        /**
+         * Web Service Call
+         */
+        String hashUrl;
+        try {
+            hashUrl = urlCut(url.getUrl());
+
             /**
-             * Web Service Call
+             *
              */
-            String hashUrl;
-            try {
-                hashUrl = urlCut(url.getUrl());
-
-                /**
-                 *
-                 */
-                String urlShortAll = "short.ly:8080/SOB/r/" + hashUrl;
-                url.setUrlShort(hashUrl);
-                request.setAttribute("urlCorta", urlShortAll);
-                request.setAttribute("urlLarga", urlName);
-            } catch (NoSuchAlgorithmException_Exception ex) {
-                Logger.getLogger(CutUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            ServletContext context = request.getSession().getServletContext();
-            context.getRequestDispatcher("/addurl.jsp").forward(request, response);
-        } else {
-
-            request.setAttribute("lengthUrl", "The url is too short");
-            ServletContext context = request.getSession().getServletContext();
-            context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+            String urlShortAll = "short.ly:8080/SOB/r/" + hashUrl;
+            url.setUrlShort(hashUrl);
+            request.setAttribute("urlCorta", urlShortAll);
+            request.setAttribute("urlLarga", urlName);
+        } catch (NoSuchAlgorithmException_Exception ex) {
+            Logger.getLogger(CutUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ServletContext context = request.getSession().getServletContext();
+        context.getRequestDispatcher("/addurl.jsp").forward(request, response);
+
     }
 
     private static String urlCut(java.lang.String url) throws NoSuchAlgorithmException_Exception {

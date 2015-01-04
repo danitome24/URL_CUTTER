@@ -19,7 +19,8 @@
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
         <link href="css/style.css" rel="stylesheet">
         <link href="css/navbar.css" rel="stylesheet">
-        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/ajax.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/javascript.js"></script>
         <link rel="SHORTCUT ICON" href="fonts/1198.png">
@@ -39,12 +40,14 @@
                 <%                    if (request.getAttribute("urlCorta") != null) {
                 %>
                 <form class="form-horizontal" role="form" method="post" action="addurl.do">
-                    <input type="hidden" name="form_action" value="addurl" />
+                    <input type="hidden" name="form_action" value="addurl" id="addurl" />
+                    
                     <%
                     } else {
                     %>
                     <form class="form-horizontal" role="form" method="post" action="cut.do">
                         <input type="hidden" name="form_action" value="cutUrl" />
+                        
                         <%
                             }
                         %>
@@ -56,14 +59,14 @@
                                             if (request.getAttribute("urlLarga") == null) {
 
                                         %>
-                                        <input required="" type="url" name="url" class="form-control"> 
+                                        <input id="url" required="" type="url" name="url" class="form-control"> 
                                         <% } else {
                                             String urlLong = (String) request.getAttribute("urlLarga");%>
                                         <input value="<%=urlLong%>"  name="url" class="form-control">
                                         <% } %>
                                     </td>
                                     <td id="buttoncut">
-                                        <button type="submit" class="btn btn-info" >Cut</button>
+                                        <button id="SubmitAddUrl" type="submit" class="btn btn-info" >Cut</button>
                                     </td>
 
                                 </tr>
@@ -78,16 +81,12 @@
                                 <%
                                     }
                                 %>
-                                <%
-                                    if (request.getAttribute("lengthUrl") != null) {
-                                %>
-                                <div class="alert alert-danger">
+
+                                <div id="shorturl" class="hide alert alert-danger">
                                     <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                    <strong>ERROR!</strong> <%=request.getAttribute("lengthUrl")%>.
+                                    <strong>ERROR!</strong><span>  Url < 26 caracters</span>
                                 </div>
-                                <%
-                                    }
-                                %>
+
                                 <%
                                     if (request.getAttribute("insertUrl") != null) {
                                 %>
@@ -116,8 +115,9 @@
                                         %>
 
                                         <td>
-                                            <a href="addurl.jsp" class="btn btn-danger" >Cancel</a>
+                                            <a href="addurl.jsp" class="btn btn-danger">Cancel</a>
                                         </td>
+
                                         <td>
                                             <button type="submit" class="btn btn-success" id="submiturl">Submit</button>
                                         </td>
