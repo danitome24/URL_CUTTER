@@ -14,16 +14,23 @@
             <ul class="dropdown-menu" role="menu">
                 <li><a href="addurl.jsp">Add URL</a></li>
                 <li class="divider"></li>
-                <li><a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=1&delete=1" >Delete URL</a></li>
+                    <%
+                        int currentPageN = -1;
+                        if(request.getParameter("page") != null){
+                            currentPageN = Integer.parseInt(request.getParameter("page"));
+                        }
+
+                    %>
+                <li><a href="http://localhost:8080/SOB/index.do?form_action=showUrl&page=<%= currentPageN%>&delete=1" >Delete URL</a></li>
                 <li class="divider"></li>
                 <li><a href="export.jsp" >Export URL</a></li>
             </ul>
         </div>
         <div class="nav navbar-nav navbar-brand" id="menulogin">
             <li class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="logindrop">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="logindrop">
 
-                    
+
                     <span class="glyphicon glyphicon-user"></span> 
                     <strong><%= currentUser.getUserName()%></strong>
                     <span class="glyphicon glyphicon-chevron-down"></span>
@@ -43,7 +50,7 @@
                                         String userLastName = currentUser.getLastName();
                                     %>
                                     <p class="text-left"><strong><%=userFirstName%></strong></p>
-                                    <p class="text-left small"><%= currentUser.getEmail() %></p>
+                                    <p class="text-left small"><%= currentUser.getEmail()%></p>
                                     <p class="text-left">
                                         <a href="modifydata.jsp" class="btn btn-primary btn-block btn-sm">Modify Account</a>
                                     </p>
@@ -71,5 +78,4 @@
 
 
 
-                    
-                    
+

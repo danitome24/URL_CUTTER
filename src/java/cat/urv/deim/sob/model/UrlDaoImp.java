@@ -149,7 +149,7 @@ public class UrlDaoImp implements IUrlDao {
         Connection con = null;
         ResultSet rs = null;
         Collection retornUrl = new LinkedList();
-        int urlPage = 5;
+        int urlPage = 10;
         int offset = urlPage*(page-1);
         try {
             con = createConnection();

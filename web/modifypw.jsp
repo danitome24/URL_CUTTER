@@ -34,7 +34,7 @@
                             <td class="camp">Old Password: </td>
                             <td class="active"> <input id="old" required="" name="password" type="password" class="form-control"  placeholder=""></td>
                             <td><span id="checkpwold" class="hide glyphicon glyphicon-ok"></span></td>
-
+                            <td><span id="checkpwold" class="hide glyphicon glyphicon-remove"></span></td>
                         </tr>
                         <tr>
                             <td class="camp" >New Password: <span class="glyphicon glyphicon-question-sign" data-placement="right" title="Composta per: minúscules, majúscules, números i major de 6" data-toggle="tooltip"></span></td>
@@ -54,16 +54,10 @@
                             <td class="success"> <button type="submit" id="submitOldPass" class="btn btn-info col-md-offset-2 disabled">Submit</button> </td>
                         </tr>
 
-
-                        <div id="oldPassValid" class="alert alert-danger hide">
+                        <%if (request.getAttribute("passUpdated") != null) {%>
+                        <div class="alert alert-success">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> <p>The old pass is wrong!</p>
-                        </div>
-
-                        <%if (request.getAttribute("passError") != null) {%>
-                        <div class="alert alert-danger">
-                            <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> <%= request.getAttribute("passError")%>
+                            <strong>SUCCESS!</strong> <%= request.getAttribute("passUpdated")%>
                         </div>
                         <% }%>
                     </table>

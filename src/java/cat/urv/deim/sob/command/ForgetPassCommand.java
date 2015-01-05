@@ -7,12 +7,16 @@ package cat.urv.deim.sob.command;
 
 import cat.urv.deim.sob.Config;
 import cat.urv.deim.sob.DaoException;
+import cat.urv.deim.sob.MD5Crypt;
 import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import cat.urv.deim.sob.model.UserDaoImp;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -51,7 +55,9 @@ public class ForgetPassCommand implements Command {
                 context.getRequestDispatcher("/rememberPass.jsp").forward(request, response);
             } else {
                 randomPass = generateRandomString();
-                boolean introduit = resetNewPassword(randomPass, idUser.getId());
+                MD5Crypt md = new MD5Crypt(randomPass);
+                String randomPassMD5 = md.cryptMD5();
+                boolean introduit = resetNewPassword(randomPassMD5, idUser.getId());
                 if (introduit) {
                     Properties props = new Properties();
                     String msgBody = "Your new Password is: " + randomPass;
@@ -80,6 +86,8 @@ public class ForgetPassCommand implements Command {
             }
         } catch (DaoException ex) {
             ex.toString();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ForgetPassCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -38,7 +38,14 @@ $(document).ready(function () {
             $("#SubmitAddUrl").removeClass('disabled');
         }
     });
-
+    
+    $('input[name=password], input[name=newPass1], input[name=newPass2]').keyup(function(){
+        if( !$('#checkpwold').hasClass('hide') && !$('#checkpw').hasClass('hide') && !$('#coincident2').hasClass('hide')){
+            $('#submitOldPass').removeClass('disabled');
+        }else{
+            $('#submitOldPass').addClass('disabled');
+        }
+    });
     /**
      * Part of ajax
      */
@@ -64,8 +71,7 @@ $(document).ready(function () {
         },function(responseText){
             var isTheSame = responseText;
             if( isTheSame === 'true'){
-                $('#oldPassValid').addClass('hide');
-                $('#submitOldPass').removeClass('disabled');
+                $('#oldPassValid').addClass('hide');        
                 $('#checkpwold').removeClass('hide');
             }else {
                 $('#oldPassValid').removeClass('hide');

@@ -7,11 +7,15 @@ package cat.urv.deim.sob.command;
 
 import cat.urv.deim.sob.Config;
 import cat.urv.deim.sob.DaoException;
+import cat.urv.deim.sob.MD5Crypt;
 import cat.urv.deim.sob.model.IUserDao;
 import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import java.io.IOException;
 import static java.lang.System.out;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
@@ -39,37 +43,19 @@ public class ChangePassCommand implements Command {
         User userLogin = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
-            if (newPass1.equals(newPass2)) {
-                if (validatePassword(newPass1)) {
-                    userDAO.updatePassword(newPass1, userLogin.getId());
-                    request.setAttribute("passUpdated", "The password has been modified");
-
-                    userLogin.setPassword(newPass1);
-                    userSession.setAttribute(Config.ATTR_SERVLET_USER, userLogin);
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("passError", "The password doesn't comply the requirements");
-                    ServletContext context = request.getSession().getServletContext();
-                    context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("passError", "The password does not match");
+                MD5Crypt md5 = new MD5Crypt(newPass1);
+                String pass = md5.cryptMD5();
+                userDAO.updatePassword(pass, userLogin.getId());
+                request.setAttribute("passUpdated", "The password has been modified");
+                userLogin.setPassword(newPass1);
+                userSession.setAttribute(Config.ATTR_SERVLET_USER, userLogin);
                 ServletContext context = request.getSession().getServletContext();
-                context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
-            }
-
+                context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
         } catch (DaoException ex) {
             ex.toString();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ChangePassCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private boolean validatePassword(String password) {
-
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-        return matcher.matches();
-
     }
 
 }
