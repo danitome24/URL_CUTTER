@@ -179,11 +179,7 @@ public class UserDaoImp implements IUserDao {
             rs.next();
             String pass = rs.getString(Config.ATTR_USER_PASSWORD);
             if (user.getPassword().equals(pass)){
-                exists = true;
-                
-            }
-            else{
-                
+                exists = true;              
             }
             return exists;
         } catch (Exception ex) {

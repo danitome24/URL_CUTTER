@@ -32,41 +32,33 @@ public class ChangePassCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String oldPass = (String) request.getParameter("oldPass");
         String newPass1 = (String) request.getParameter("newPass1");
         String newPass2 = (String) request.getParameter("newPass2");
-        
+
         HttpSession userSession = request.getSession(true);
         User userLogin = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
         IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
-            if (userLogin.getPassword().equals(oldPass)) {
-                if (newPass1.equals(newPass2)) {
-                    if (validatePassword(newPass1)) {
-                        userDAO.updatePassword(newPass1, userLogin.getId());
-                        request.setAttribute("passUpdated", "The password has been modified");
-                        
-                        userLogin.setPassword(newPass1);
-                        userSession.setAttribute(Config.ATTR_SERVLET_USER, userLogin);
-                        ServletContext context = request.getSession().getServletContext();
-                        context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("passError", "The password doesn't comply the requirements");
-                        ServletContext context = request.getSession().getServletContext();
-                        context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
-                    }
+            if (newPass1.equals(newPass2)) {
+                if (validatePassword(newPass1)) {
+                    userDAO.updatePassword(newPass1, userLogin.getId());
+                    request.setAttribute("passUpdated", "The password has been modified");
+
+                    userLogin.setPassword(newPass1);
+                    userSession.setAttribute(Config.ATTR_SERVLET_USER, userLogin);
+                    ServletContext context = request.getSession().getServletContext();
+                    context.getRequestDispatcher("/modifydata.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("passError", "The password does not match");
+                    request.setAttribute("passError", "The password doesn't comply the requirements");
                     ServletContext context = request.getSession().getServletContext();
                     context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
                 }
-
             } else {
-                
-                request.setAttribute("errorOldPass", "La contrasenya antiga no es correcta");
+                request.setAttribute("passError", "The password does not match");
                 ServletContext context = request.getSession().getServletContext();
                 context.getRequestDispatcher("/modifypw.jsp").forward(request, response);
             }
+
         } catch (DaoException ex) {
             ex.toString();
         }

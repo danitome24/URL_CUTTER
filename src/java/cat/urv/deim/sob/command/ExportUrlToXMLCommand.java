@@ -8,6 +8,7 @@ package cat.urv.deim.sob.command;
 import ObjectList.UrlList;
 import SAXparser.SaxHandler;
 import cat.urv.deim.sob.Config;
+import cat.urv.deim.sob.DaoException;
 import cat.urv.deim.sob.model.IUrlDao;
 import cat.urv.deim.sob.model.Url;
 import cat.urv.deim.sob.model.UrlDaoFactory;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -59,7 +61,7 @@ public class ExportUrlToXMLCommand implements Command {
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getRealPath(File.separator);
 
-        String path = contextPath +"data\\"+ user.getId() + ".xml";
+        String path = contextPath + "data\\" + user.getId() + ".xml";
         PATH_XSD_VALIDATOR = contextPath + "XML-Schema\\url.xsd";
 
         IUrlDao urlDao = UrlDaoFactory.getUserDAO(Config.JDBC_DRIVER);
@@ -84,7 +86,7 @@ public class ExportUrlToXMLCommand implements Command {
             boolean isWellFormed = wellFormedXMLFile(request, path);
             boolean isValid = validateXMLFile(request, path);
 
-            if(isValid && isWellFormed) {
+            if (isValid && isWellFormed) {
                 request.setAttribute("xmlIsValid", "The XML file is valid");
             }
 
@@ -128,7 +130,7 @@ public class ExportUrlToXMLCommand implements Command {
             ServletContext context = request.getSession().getServletContext();
             context.getRequestDispatcher("/index.jsp").forward(request, response);
 
-        } catch (Exception ex) {
+        } catch (DaoException | JAXBException | ParserConfigurationException | SAXException | IOException | ServletException ex) {
             ex.toString();
         }
 
@@ -145,7 +147,7 @@ public class ExportUrlToXMLCommand implements Command {
      * @throws java.io.IOException
      */
     public boolean validateXMLFile(HttpServletRequest request, String path) throws ParserConfigurationException, SAXException, IOException {
-        System.out.println("PATH: "+path);
+        System.out.println("PATH: " + path);
         XSDValidator validator = new XSDValidator(PATH_XSD_VALIDATOR, path);
         boolean xmlIsValid = validator.validateXML();
         return xmlIsValid;
@@ -164,12 +166,14 @@ public class ExportUrlToXMLCommand implements Command {
     public boolean wellFormedXMLFile(HttpServletRequest request, String path) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
-
-        // instantiate our little demo handler
-        SaxHandler handler = new SaxHandler();
-        // parse the file
-        parser.parse(path, handler);
-        out.println(handler.getOutput());
+        try {
+            // instantiate our little demo handler
+            SaxHandler handler = new SaxHandler();
+            // parse the file
+            parser.parse(path, handler);
+        } catch (SAXException | IOException e) {
+            return false;
+        }
         return true;
     }
 

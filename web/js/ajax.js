@@ -27,20 +27,6 @@ $(document).ready(function () {
         }
     });
 
-    /*$('#nomUsuariForm').keyup(function () {
-     var name = $(this).val();
-     $.get('registre.do?form_action=form', {
-     username: name
-     }, function (responseText) {
-     if (responseText === "repeat") {
-     document.getElementById("repeat").innerHTML = responseText;
-     }
-     else {
-     document.getElementById("repeat").innerHTML = responseText;
-     }
-     });
-     });*/
-
     $('#url').keyup(function () {
         var url = $(this).val();
         if (url.length < 26) {
@@ -53,54 +39,41 @@ $(document).ready(function () {
         }
     });
 
-    var req;
-    var target;
-    var isIE;
-    //Function to get XMLHttpRequest
-    function initRequest() {
-        if (window.XMLHttpRequest) {
-            req = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            isIE = true;
-            req = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-    }
-
+    /**
+     * Part of ajax
+     */
     $('#nomUsuariForm').keyup(function () {
-        target = $('#nomUsuariForm').val();
-        var url = "validateUser.do?form_action=validate&user=" + escape(target);
-        
-        initRequest();
-
-        req.onreadystatechange = callback;
-        req.open("GET", url);
-        req.send();
+        var name = $(this).val();
+        $.get('validateUser.do?form_action=validate', {
+            user: name
+        }, function (responseText) {
+            var isValid = responseText;
+            if (isValid === "true") {
+                $('#userNameValid').removeClass('hide');
+            }
+            else {
+                $('#userNameValid').addClass('hide');
+            }
+        });
     });
-    
-    function callback(){
-        var isRepeat = req.responseXML.getElementsByTagName("repeat")[0].childNodes[0].nodeValue;
-        if(isRepeat){
-            $('#userNameValid').removeClass('hide');
-        }else{
-            $('#userNameValid').addClass('hide');
-        }
-    }
 
+    $('#old').keyup(function () {
+        var password = $(this).val();
+        $.get('check.do?form_action=checkOldPass',{
+            pass: password
+        },function(responseText){
+            var isTheSame = responseText;
+            if( isTheSame === 'true'){
+                $('#oldPassValid').addClass('hide');
+                $('#submitOldPass').removeClass('disabled');
+                $('#checkpwold').removeClass('hide');
+            }else {
+                $('#oldPassValid').removeClass('hide');
+                $('#checkpwold').addClass('hide');
+            }
+        });
+    });
 
-
-
-
-    /*
-     $.post('registre.do?form_action=form', {
-     password: name
-     }, function (responseText) {
-     if (responseText==="badpw"){
-     document.getElementById("checkpw").innerHTML = responseText;
-     }
-     else  {
-     document.getElementById("checkpw").innerHTML = "OK";
-     }      
-     });*/
 
 
 

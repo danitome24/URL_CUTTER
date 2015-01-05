@@ -18,42 +18,45 @@ package cat.urv.deim.sob.command;
 
 import cat.urv.deim.sob.Config;
 import cat.urv.deim.sob.DaoException;
+import cat.urv.deim.sob.MD5Crypt;
 import cat.urv.deim.sob.model.IUserDao;
 import cat.urv.deim.sob.model.User;
 import cat.urv.deim.sob.model.UserDaoFactory;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Daniel Tomé <daniel.tome@estudiants.urv.cat>
  */
-public class UserIsRepeatCommand implements Command {
+public class CheckOldPasswordCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = request.getParameter("user");
-        System.out.println(userName);
-        User user = new User();
-        user.setUserName(userName);
-        IUserDao userDAO = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
         try {
-            boolean isRepeat = userDAO.isUsernameRepeat(user);
-            if (isRepeat) {
-
-                response.setHeader("Cache-Control", "no-cache");
+            String password = request.getParameter("pass");
+            User user = new User();
+            HttpSession userSession = request.getSession(true);
+            User userSes = (User) userSession.getAttribute(Config.ATTR_SERVLET_USER);
+            MD5Crypt md = new MD5Crypt(password);
+            String cryptPass = md.cryptMD5();
+            user.setPassword(cryptPass);
+            user.setId(userSes.getId());
+            IUserDao userDao = UserDaoFactory.getUserDAO(Config.JDBC_DRIVER);
+            boolean passIsCorrect = userDao.userPassIsCorrect(user);
+            if (passIsCorrect) {
                 response.getWriter().write("true");
             } else {
-                response.setHeader("Cache-Control", "no-cache");
-                System.out.println("No esta repetido");
                 response.getWriter().write("false");
             }
-        } catch (DaoException ex) {
-            Logger.getLogger(UserIsRepeatCommand.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DaoException | NoSuchAlgorithmException ex) {
+            Logger.getLogger(CheckOldPasswordCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

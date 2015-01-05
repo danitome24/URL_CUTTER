@@ -17,6 +17,7 @@
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/javascript.js"></script>
+        <script src="js/ajax.js"></script>
         <link rel="SHORTCUT ICON" href="fonts/1198.png">
     </head>
     <body>
@@ -31,24 +32,34 @@
                     <table id="tmodify">
                         <tr>
                             <td class="camp">Old Password: </td>
-                            <td class="active"> <input required="" name="oldPass" type="password" class="form-control" id="" placeholder=""> </td>
+                            <td class="active"> <input id="old" required="" name="password" type="password" class="form-control"  placeholder=""></td>
+                            <td><span id="checkpwold" class="hide glyphicon glyphicon-ok"></span></td>
+
                         </tr>
                         <tr>
-                            <td class="camp">New Password: </td>
-                            <td class="active"> <input required="" name="newPass1" type="password" class="form-control" id="" placeholder=""> </td>
+                            <td class="camp" >New Password: <span class="glyphicon glyphicon-question-sign" data-placement="right" title="Composta per: minúscules, majúscules, números i major de 6" data-toggle="tooltip"></span></td>
+                            <td class="active"> <input required="" name="newPass1" type="password" class="form-control" id="password" placeholder=""> </td>
+                            <td>
+                                <span id="checkpw" class="hide glyphicon glyphicon-ok"></span>
+                                <span id="checkpw2" class="hide glyphicon glyphicon-remove"></span>
+                            </td>
                         </tr>
                         <tr>
                             <td class="camp">Repeat New Password: </td>
-                            <td class="active"> <input required="" name="newPass2" type="password" class="form-control" id="" placeholder=""> </td>
-                            <td class="success"> <button type="submit" class="btn btn-info col-md-offset-2">Submit</button> </td>
+                            <td class="active"> <input required="" name="newPass2" type="password" class="form-control" id="password2" placeholder=""> </td>
+                            <td>
+                                <span id="coincident" class="hide">Not coincident</span>
+                                <span id="coincident2" class="hide glyphicon glyphicon-ok"></span>
+                            </td>
+                            <td class="success"> <button type="submit" id="submitOldPass" class="btn btn-info col-md-offset-2 disabled">Submit</button> </td>
                         </tr>
 
-                        <%if (request.getAttribute("errorOldPass") != null) {%>
-                        <div class="alert alert-danger">
+
+                        <div id="oldPassValid" class="alert alert-danger hide">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
-                            <strong>ERROR!</strong> <%=request.getAttribute("errorOldPass")%>
+                            <strong>ERROR!</strong> <p>The old pass is wrong!</p>
                         </div>
-                        <% }%>
+
                         <%if (request.getAttribute("passError") != null) {%>
                         <div class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>

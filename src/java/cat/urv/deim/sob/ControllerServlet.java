@@ -31,6 +31,7 @@ public class ControllerServlet extends HttpServlet {
         this.commands.put("deleteUrl", new DeleteUrlCommand());
         this.commands.put("exportUrl", new ExportUrlToXMLCommand());
         this.commands.put("validate", new UserIsRepeatCommand());
+        this.commands.put("checkOldPass",new CheckOldPasswordCommand());
     }
 
     protected void processCommand(
