@@ -38,32 +38,30 @@ public class CutUrlCommand implements Command {
         userSession.setAttribute("lengthUrl", null);
         Url url = new Url();
         url.setUrl(urlName);
-        /**
-         * Web Service Call
-         */
-        String hashUrl;
-        try {
-            hashUrl = urlCut(url.getUrl());
 
-            /**
-             *
-             */
-            String urlShortAll = "short.ly:8080/SOB/r/" + hashUrl;
-            url.setUrlShort(hashUrl);
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.reset();
+            byte[] buffer = urlName.getBytes();
+            md.update(buffer);
+            byte[] digest = md.digest();
+
+            String hexStr = "";
+            for (int i = 0; i < 3; i++) {
+                hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
+            }
+
+            String urlShortAll = "short.ly:8080/SOB/r/" + hexStr;
+            url.setUrlShort(hexStr);
             request.setAttribute("urlCorta", urlShortAll);
             request.setAttribute("urlLarga", urlName);
-        } catch (NoSuchAlgorithmException_Exception ex) {
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(CutUrlCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
         ServletContext context = request.getSession().getServletContext();
         context.getRequestDispatcher("/addurl.jsp").forward(request, response);
 
-    }
-
-    private static String urlCut(java.lang.String url) throws NoSuchAlgorithmException_Exception {
-        com.service.UrlWebService_Service service = new com.service.UrlWebService_Service();
-        com.service.UrlWebService port = service.getUrlWebServicePort();
-        return port.urlCut(url);
     }
 
 }
